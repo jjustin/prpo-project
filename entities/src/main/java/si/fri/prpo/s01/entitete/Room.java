@@ -1,12 +1,14 @@
 package si.fri.prpo.s01.entitete;
 
 import javax.persistence.*;
+import java.util.Arrays;
 import java.util.List;
 
 @Entity(name = "room")
 @NamedQueries(value =
         {
-                @NamedQuery(name = "Room.getAll", query = "SELECT r FROM room r")
+                @NamedQuery(name = "Room.getAll", query = "SELECT r FROM room r"),
+                @NamedQuery(name = "Room.get", query =  "SELECT r FROM room r WHERE r.id = :id")
                 //se dodej neke te queries
         })
 public class Room {
@@ -18,6 +20,9 @@ public class Room {
     private String name;
 
     private Integer size;
+
+    @Column(name="in_room")
+    private Integer inRoom;
 
     private String owner;
 
@@ -61,4 +66,23 @@ public class Room {
         this.entranceList = entranceList;
     }
 
+    public Integer getInRoom() {
+        return inRoom;
+    }
+
+    public void setInRoom(Integer inRoom) {
+        inRoom = inRoom;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Room{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", size=" + size +
+                ", owner='" + owner + '\'' +
+                ", entranceList=" +  Arrays.toString(entranceList.toArray()) +
+                '}';
+    }
 }

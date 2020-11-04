@@ -1,5 +1,5 @@
-INSERT INTO room (size, name, owner) VALUES (10, 'Igralnica pujski', 'Petra');
-INSERT INTO room (size, name, owner) VALUES  (15, 'Zbornica', 'Ana');
+INSERT INTO room (size, in_room, name, owner) VALUES (10, 0, 'Igralnica pujski', 'Petra');
+INSERT INTO room (size, in_room, name, owner) VALUES  (15, 0, 'Zbornica', 'Ana');
 
 INSERT INTO entrance (room_id) VALUES (1);
 INSERT INTO entrance (room_id) VALUES (2);
