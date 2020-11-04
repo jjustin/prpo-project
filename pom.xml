@@ -36,6 +36,28 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+
+            <dependency>
+                <groupId>org.postgresql</groupId>
+                <artifactId>postgresql</artifactId>
+                <version>${postgresql.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>si.fri.prpo.s01</groupId>
+                <artifactId>api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>si.fri.prpo.s01</groupId>
+                <artifactId>entities</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>si.fri.prpo.s01</groupId>
+                <artifactId>services</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 

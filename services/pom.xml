@@ -23,7 +23,7 @@
         <dependency>
             <groupId>si.fri.prpo.s01</groupId>
             <artifactId>entities</artifactId>
-            <version>${project.parent.version}</version>
+
         </dependency>
     </dependencies>
 

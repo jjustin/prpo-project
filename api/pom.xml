@@ -22,8 +22,8 @@
         </dependency>
         <dependency>
             <groupId>si.fri.prpo.s01</groupId>
-            <artifactId>entities</artifactId>
-            <version>${project.parent.version}</version>
+            <artifactId>services</artifactId>
+
         </dependency>
     </dependencies>
 
@@ -44,5 +44,10 @@
             </plugin>
         </plugins>
     </build>
+
+
+
+
+
 
 </project>
