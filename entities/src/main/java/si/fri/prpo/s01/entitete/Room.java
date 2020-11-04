@@ -15,9 +15,12 @@ public class Room {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    private String name;
+
     private Integer size;
 
     private String owner;
+
 
     @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
     private List<Entrance> entranceList;
@@ -29,6 +32,10 @@ public class Room {
     public void setId(Integer id) {
         this.id = id;
     }
+
+    public String getName() { return name; }
+
+    public void setName(String name) { this.name = name; }
 
     public Integer getSize() {
         return size;
@@ -53,4 +60,5 @@ public class Room {
     public void setEntranceList(List<Entrance> entranceList) {
         this.entranceList = entranceList;
     }
+
 }

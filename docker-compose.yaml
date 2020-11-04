@@ -3,7 +3,7 @@ services:
   postgres:
     image: postgres:13
     environment:
-      - POSTGRES_DB=roomcounter
+      - POSTGRES_DB=roomCounter
       # - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     ports:

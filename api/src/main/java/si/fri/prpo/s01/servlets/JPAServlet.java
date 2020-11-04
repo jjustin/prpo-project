@@ -22,13 +22,17 @@ public class JPAServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        final PrintWriter writer = resp.getWriter();
+        ConfigurationUtil.getInstance().get("kumuluzee.name").ifPresent(r -> writer.println("Service name: "+ r));
 
-        List<Room> room = roomsBean.getRooms();
+        List<Room> rooms = roomsBean.getRooms();
 
         // izpis uporabnikov na spletno stran
-        final PrintWriter writer = resp.getWriter();
-        writer.println("izpis v browser");
-        ConfigurationUtil.getInstance().get("kumuluzee.name").ifPresent(r-> writer.println("ime sobe: "+ r));
+        writer.println("Rooms:");
+
+        for (Room r: rooms){
+            writer.println(String.format("- %s", r.getName()));
+        }
 
     }
 

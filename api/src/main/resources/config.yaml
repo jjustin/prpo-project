@@ -1,5 +1,5 @@
 kumuluzee:
-  name: simple-jdbc-sample
+  name: prpo-s01-api
   version: 1.0.0
   env:
     name: dev
