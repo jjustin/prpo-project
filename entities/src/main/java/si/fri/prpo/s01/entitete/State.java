@@ -7,7 +7,9 @@ import java.sql.Time;
 @Entity(name = "state")
 @NamedQueries(value =
         {
-                @NamedQuery(name = "State.getAll", query = "SELECT e FROM state e")
+                @NamedQuery(name = "State.getAll", query = "SELECT s FROM state s"),
+                @NamedQuery(name = "State.getAllForEntrance", query = "SELECT s FROM state s WHERE s.entrance.id = :eID"),
+                @NamedQuery(name = "State.getAllForRoom", query =  "SELECT s FROM state s WHERE s.entrance.room.id = :roomID")
         })
 
 public class State {
@@ -67,5 +69,16 @@ public class State {
 
     public void setEntrance(Entrance entrance) {
         this.entrance = entrance;
+    }
+
+    @Override
+    public String toString() {
+        return "State{" +
+                "id=" + id +
+                ", number_In=" + number_In +
+                ", number_Out=" + number_Out +
+                ", date=" + date +
+                ", time=" + time +
+                '}';
     }
 }

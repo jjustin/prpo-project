@@ -8,7 +8,8 @@ import java.util.List;
 @NamedQueries(value =
         {
                 @NamedQuery(name = "Room.getAll", query = "SELECT r FROM room r"),
-                @NamedQuery(name = "Room.get", query =  "SELECT r FROM room r WHERE r.id = :id")
+                @NamedQuery(name = "Room.get", query =  "SELECT r FROM room r WHERE r.id = :id"),
+                @NamedQuery(name = "Room.getOwners", query =  "SELECT DISTINCT r.owner FROM room r")
                 //se dodej neke te queries
         })
 public class Room {

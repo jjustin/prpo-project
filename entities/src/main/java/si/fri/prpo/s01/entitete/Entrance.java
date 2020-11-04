@@ -6,7 +6,8 @@ import java.util.List;
 @Entity(name = "entrance")
 @NamedQueries(value =
         {
-                @NamedQuery(name = "Entrance.getAll", query = "SELECT e FROM entrance e")
+                @NamedQuery(name = "Entrance.getAll", query = "SELECT e FROM entrance e"),
+                @NamedQuery(name = "Entrance.getForRoom", query = "SELECT e FROM entrance e WHERE e.room.id = :roomID")
         })
 public class Entrance {
 
@@ -17,6 +18,8 @@ public class Entrance {
     @ManyToOne
     @JoinColumn(name = "room_id") //poimenuje stolpec room_id v Entrance
     private Room room;
+
+    private String name;
 
     @OneToMany(mappedBy = "entrance", cascade = CascadeType.ALL)
     private List<State> stateList;
@@ -35,5 +38,14 @@ public class Entrance {
 
     public void setRoom(Room room) {
         this.room = room;
+    }
+
+    @Override
+    public String toString() {
+        return "Entrance{" +
+                "id=" + id +
+                ", name=" + name +
+                ", stateList=" + stateList +
+                '}';
     }
 }
