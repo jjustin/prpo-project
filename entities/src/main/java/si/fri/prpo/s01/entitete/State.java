@@ -9,7 +9,8 @@ import java.sql.Time;
         {
                 @NamedQuery(name = "State.getAll", query = "SELECT s FROM state s"),
                 @NamedQuery(name = "State.getAllForEntrance", query = "SELECT s FROM state s WHERE s.entrance.id = :eID"),
-                @NamedQuery(name = "State.getAllForRoom", query =  "SELECT s FROM state s WHERE s.entrance.room.id = :roomID")
+                @NamedQuery(name = "State.getAllForRoom", query =  "SELECT s FROM state s WHERE s.entrance.room.id = :roomID"),
+                @NamedQuery(name = "State.getOrderedDescForRoom", query = "SELECT s FROM state s WHERE s.entrance.room.id = :roomID ORDER BY s.date DESC, s.time DESC")
         })
 
 public class State {

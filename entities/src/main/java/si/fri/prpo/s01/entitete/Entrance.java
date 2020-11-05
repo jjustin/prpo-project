@@ -1,6 +1,7 @@
 package si.fri.prpo.s01.entitete;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name = "entrance")
@@ -22,7 +23,7 @@ public class Entrance {
     private String name;
 
     @OneToMany(mappedBy = "entrance", cascade = CascadeType.ALL)
-    private List<State> stateList;
+    private List<State> stateList = new ArrayList<>();
 
     public Integer getId() {
         return id;

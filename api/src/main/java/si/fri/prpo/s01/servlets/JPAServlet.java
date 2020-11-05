@@ -44,12 +44,33 @@ public class JPAServlet extends HttpServlet {
             writer.println(String.format("- %s", r.getName()));
         }
 
-        // izpis ene sobe
-        writer.print("\nRoom id=1:\n- ");
-        Room r = roomsBean.getRoom(1);
+
+        // Dodaj sobo
+        Room r = new Room();
+        r.setName("New Name");
+        r.setInRoom(0);
+        r.setSize(12);
+        r.setOwner("Matjaz");
+        r = roomsBean.addRoom(r);
+        // izpis nove sobe
+        writer.print("\nNew room:\n- ");
+        r = roomsBean.getRoom(r.getId());
         writer.println(r);
 
+        // Posodobi sobo
+        r.setOwner("Tanja");
+        r.setName("Novo ime");
+        r = roomsBean.updateRoom(r.getId(), r);
+
+        // izpis posodobljene sobe
+        writer.print("\nUpdated room:\n- ");
+        r = roomsBean.getRoom(r.getId());
+        writer.println(r);
+
+        writer.println("\nDeleted room");
+        roomsBean.deleteRoom(r.getId());
+
         List<State> states = statesBean.getStatesForRoom(1);
-        writer.println("States: " + Arrays.toString(states.toArray()));
+        writer.println("\nStates in room 1: " + Arrays.toString(states.toArray()));
     }
 }

@@ -1,6 +1,7 @@
 package si.fri.prpo.s01.entitete;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -29,7 +30,7 @@ public class Room {
 
 
     @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
-    private List<Entrance> entranceList;
+    private List<Entrance> entranceList =  new ArrayList<>();
 
     public Integer getId() {
         return id;
@@ -72,7 +73,7 @@ public class Room {
     }
 
     public void setInRoom(Integer inRoom) {
-        inRoom = inRoom;
+        this.inRoom = inRoom;
     }
 
 
@@ -81,6 +82,7 @@ public class Room {
         return "Room{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", inRoom='" +  inRoom + '\'' +
                 ", size=" + size +
                 ", owner='" + owner + '\'' +
                 ", entranceList=" +  Arrays.toString(entranceList.toArray()) +
