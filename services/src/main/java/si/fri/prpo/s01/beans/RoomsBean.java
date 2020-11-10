@@ -27,12 +27,12 @@ public class RoomsBean {
 
     @PostConstruct
     public void init() {
-        log.info("Initialized bean");
+        log.info("Initializing bean" + RoomsBean.class.getSimpleName());
     }
 
     @PreDestroy
     public void remove() {
-        log.info("Destroying bean");
+        log.info("Destroying bean"+ RoomsBean.class.getSimpleName());
     }
 
     public List<Room> getRooms () {
