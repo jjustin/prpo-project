@@ -1,5 +1,6 @@
 package si.fri.prpo.s01.entitete;
 
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,8 +21,17 @@ public class Entrance {
     @JoinColumn(name = "room_id") //poimenuje stolpec room_id v Entrance
     private Room room;
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     private String name;
 
+    @JsonbTransient
     @OneToMany(mappedBy = "entrance", cascade = CascadeType.ALL)
     private List<State> stateList = new ArrayList<>();
 

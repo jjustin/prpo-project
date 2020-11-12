@@ -1,5 +1,6 @@
 package si.fri.prpo.s01.entitete;
 
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,9 +29,10 @@ public class Room {
 
     private String owner;
 
-
+    @JsonbTransient
     @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
     private List<Entrance> entranceList =  new ArrayList<>();
+
 
     public Integer getId() {
         return id;

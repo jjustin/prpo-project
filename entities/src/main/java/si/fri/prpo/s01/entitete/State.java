@@ -1,5 +1,6 @@
 package si.fri.prpo.s01.entitete;
 
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
 import java.sql.Date;
 import java.sql.Time;
