@@ -20,8 +20,9 @@ public class State {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private Integer number_In; //how many enters
-    private Integer number_Out; //how many exits
+    private Integer numberIn; //how many enters
+    private Integer numberOut; //how many exits
+    private Integer currentlyIn; // how many people are in a room when this state is created
     private Date date;
     private Time time;
 
@@ -37,20 +38,20 @@ public class State {
         this.id = id;
     }
 
-    public Integer getNumber_In() {
-        return number_In;
+    public Integer getNumberIn() {
+        return numberIn;
     }
 
-    public void setNumber_In(Integer number_In) {
-        this.number_In = number_In;
+    public void setNumberIn(Integer numberIn) {
+        this.numberIn = numberIn;
     }
 
-    public Integer getNumber_Out() {
-        return number_Out;
+    public Integer getNumberOut() {
+        return numberOut;
     }
 
-    public void setNumber_Out(Integer number_Out) {
-        this.number_Out = number_Out;
+    public void setNumberOut(Integer numberOut) {
+        this.numberOut = numberOut;
     }
 
     public Date getDate() { return date; }
@@ -73,12 +74,17 @@ public class State {
         this.entrance = entrance;
     }
 
+    public Integer getCurrentlyIn() { return currentlyIn; }
+
+    public void setCurrentlyIn(Integer currentlyIn) { this.currentlyIn = currentlyIn; }
+
     @Override
     public String toString() {
         return "State{" +
                 "id=" + id +
-                ", number_In=" + number_In +
-                ", number_Out=" + number_Out +
+                ", numberIn=" + numberIn +
+                ", numberOut=" + numberOut +
+                ", currentlyIn=" + currentlyIn +
                 ", date=" + date +
                 ", time=" + time +
                 '}';

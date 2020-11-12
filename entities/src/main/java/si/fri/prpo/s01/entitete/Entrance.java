@@ -21,14 +21,6 @@ public class Entrance {
     @JoinColumn(name = "room_id") //poimenuje stolpec room_id v Entrance
     private Room room;
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     private String name;
 
     @JsonbTransient
@@ -49,6 +41,14 @@ public class Entrance {
 
     public void setRoom(Room room) {
         this.room = room;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
