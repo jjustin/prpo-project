@@ -1,6 +1,5 @@
-package si.fri.prpo.s01.beans;
+package si.fri.prpo.s01.services.beans;
 
-import si.fri.prpo.s01.entitete.Entrance;
 import si.fri.prpo.s01.entitete.State;
 
 import javax.annotation.PostConstruct;

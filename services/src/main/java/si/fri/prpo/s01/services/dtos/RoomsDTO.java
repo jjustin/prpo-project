@@ -1,4 +1,4 @@
-package si.fri.prpo.s01.dtos;
+package si.fri.prpo.s01.services.dtos;
 
 public class RoomsDTO {
 

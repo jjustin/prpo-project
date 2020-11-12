@@ -1,7 +1,4 @@
-package si.fri.prpo.s01.beans;
-
-import si.fri.prpo.s01.entitete.Entrance;
-import si.fri.prpo.s01.entitete.Room;
+package si.fri.prpo.s01.services.beans;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;

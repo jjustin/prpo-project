@@ -1,4 +1,4 @@
-package si.fri.prpo.s01.dtos;
+package si.fri.prpo.s01.services.dtos;
 
 import java.sql.Time;
 import java.util.Date;
