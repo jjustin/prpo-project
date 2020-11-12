@@ -1,7 +1,9 @@
 package si.fri.prpo.s01.api.servlets;
 
 import com.kumuluz.ee.configuration.utils.ConfigurationUtil;
+import si.fri.prpo.s01.entitete.Entrance;
 import si.fri.prpo.s01.entitete.State;
+import si.fri.prpo.s01.services.beans.EntrancesBean;
 import si.fri.prpo.s01.services.beans.RoomsBean;
 import si.fri.prpo.s01.services.beans.StatesBean;
 import si.fri.prpo.s01.entitete.Room;
@@ -21,6 +23,8 @@ import java.util.List;
 public class JPAServlet extends HttpServlet {
     @Inject
     private RoomsBean roomsBean;
+    @Inject
+    private EntrancesBean entrancesBean;
     @Inject
     private StatesBean statesBean;
 
@@ -42,6 +46,13 @@ public class JPAServlet extends HttpServlet {
         writer.println("\nRoomsCriteriaAPI:");
         for (Room r: rooms){
             writer.println(String.format("- %s", r.getName()));
+        }
+
+        // izpis vhodov za sobo 1
+        List<Entrance> entrances = entrancesBean.getEntrancesForRoom(1);
+        writer.println("\nEntrances for room 1:");
+        for (Entrance e: entrances){
+            writer.println(String.format("- %s", e.toString()));
         }
 
 
