@@ -8,16 +8,18 @@ import si.fri.prpo.s01.services.dtos.PeopleEnterDTO;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import java.sql.Time;
 import java.sql.Date;
+import java.util.UUID;
 import java.util.logging.Logger;
 import java.time.OffsetDateTime;
 
 @ApplicationScoped
 public class OccupancyRateBean {
-
+    private String uuid = UUID.randomUUID().toString();
     private Logger log = Logger.getLogger(OccupancyRateBean.class.getName());
 
     @Inject
@@ -31,11 +33,11 @@ public class OccupancyRateBean {
 
     @PostConstruct
     private void Init(){
-        log.info("Initializing bean " + OccupancyRateBean.class.getSimpleName());
+        log.info("Initializing bean " + OccupancyRateBean.class.getSimpleName() + " with id: " + uuid);
     }
     @PreDestroy
     private void Remove(){
-        log.info("Destroying bean " + OccupancyRateBean.class.getSimpleName());
+        log.info("Destroying bean " + OccupancyRateBean.class.getSimpleName()+ " with id: " + uuid);
     }
 
 
@@ -89,5 +91,7 @@ public class OccupancyRateBean {
 
         return state;
     }
+
+    // TODO: add another call
 
 }
