@@ -4,9 +4,11 @@ import com.kumuluz.ee.configuration.utils.ConfigurationUtil;
 import si.fri.prpo.s01.entitete.Entrance;
 import si.fri.prpo.s01.entitete.State;
 import si.fri.prpo.s01.services.beans.EntrancesBean;
+import si.fri.prpo.s01.services.beans.OccupancyRateBean;
 import si.fri.prpo.s01.services.beans.RoomsBean;
 import si.fri.prpo.s01.services.beans.StatesBean;
 import si.fri.prpo.s01.entitete.Room;
+import si.fri.prpo.s01.services.dtos.PeopleEnterDTO;
 
 import javax.inject.Inject;
 import javax.servlet.ServletException;
@@ -27,6 +29,8 @@ public class JPAServlet extends HttpServlet {
     private EntrancesBean entrancesBean;
     @Inject
     private StatesBean statesBean;
+    @Inject
+    private OccupancyRateBean occupancyRateBean;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -34,6 +38,14 @@ public class JPAServlet extends HttpServlet {
         ConfigurationUtil.getInstance().get("kumuluzee.name").ifPresent(r -> writer.println("Service name: "+ r));
 
         List<Room> rooms = roomsBean.getRooms();
+        // people enter through enterance 1
+        PeopleEnterDTO peopleEnterDTO = new PeopleEnterDTO();
+        peopleEnterDTO.setEntranceId(1);
+        peopleEnterDTO.setNumber(3);
+        occupancyRateBean.PeopleEnter(peopleEnterDTO);
+        peopleEnterDTO.setNumber(2);
+        occupancyRateBean.PeopleEnter(peopleEnterDTO);
+
 
         // izpis uporabnikov na spletno stran
         writer.println("Rooms:");

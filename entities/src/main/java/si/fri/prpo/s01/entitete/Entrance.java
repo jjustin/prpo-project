@@ -51,6 +51,14 @@ public class Entrance {
         this.name = name;
     }
 
+    public List<State> getStateList() {
+        return stateList;
+    }
+
+    public void setStateList(List<State> stateList) {
+        this.stateList = stateList;
+    }
+
     @Override
     public String toString() {
         return "Entrance{" +

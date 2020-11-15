@@ -76,7 +76,8 @@ public class RoomsBean {
         if (room.getInRoom()==null){room.setInRoom(oldRoom.getInRoom());}
         if (room.getSize()==null){room.setSize(oldRoom.getSize());}
         if (room.getOwner()==null){room.setOwner(oldRoom.getOwner());}
-        room.getEntranceList().addAll(room.getEntranceList());
+        // TODO: fix
+//        room.getEntranceList().addAll(room.getEntranceList());
 
         em.merge(room);
 

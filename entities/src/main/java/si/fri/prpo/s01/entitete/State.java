@@ -20,9 +20,9 @@ public class State {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private Integer numberIn; //how many enters
-    private Integer numberOut; //how many exits
-    private Integer currentlyIn; // how many people are in a room when this state is created
+    private Integer numberIn = 0; //how many enters
+    private Integer numberOut = 0; //how many exits
+    private Integer currentlyIn = 0; // how many people are in a room when this state is created
     private Date date;
     private Time time;
 
