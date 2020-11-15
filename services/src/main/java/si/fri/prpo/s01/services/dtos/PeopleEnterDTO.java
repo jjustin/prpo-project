@@ -2,7 +2,7 @@ package si.fri.prpo.s01.services.dtos;
 
 public class PeopleEnterDTO {
     private Integer entranceId;
-    private Integer number; // number of people entering
+    private Integer number; // number of people entering/exiting
 
     public Integer getEntranceId() {
         return entranceId;

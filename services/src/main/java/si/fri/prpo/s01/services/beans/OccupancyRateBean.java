@@ -64,4 +64,30 @@ public class OccupancyRateBean {
 
         return state;
     }
+
+    @Transactional
+    public State PeopleExit(PeopleEnterDTO pe){
+        Entrance entrance = entrancesBean.getEntrance(pe.getEntranceId());
+        Room room = entrance.getRoom();
+
+        // update room
+        Integer newInRoom = room.getInRoom() - pe.getNumber();
+        room.setInRoom(newInRoom);
+        roomsBean.updateRoom(room.getId(), room);
+
+        // create new state
+        State state = new State();
+
+        state.setEntrance(entrance);
+        entrance.getStateList().add(state);
+        state.setCurrentlyIn(newInRoom);
+        state.setNumberOut(pe.getNumber());
+        state.setDate(new Date(System.currentTimeMillis()));
+        state.setTime(new Time(System.currentTimeMillis()));
+
+        state = statesBean.addState(state);
+
+        return state;
+    }
+
 }

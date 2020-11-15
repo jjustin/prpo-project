@@ -44,7 +44,7 @@ public class JPAServlet extends HttpServlet {
         peopleEnterDTO.setNumber(3);
         occupancyRateBean.PeopleEnter(peopleEnterDTO);
         peopleEnterDTO.setNumber(2);
-        occupancyRateBean.PeopleEnter(peopleEnterDTO);
+        occupancyRateBean.PeopleExit(peopleEnterDTO);
 
 
         // izpis uporabnikov na spletno stran
