@@ -3,6 +3,7 @@ package si.fri.prpo.s01.entitete;
 import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Entity(name = "entrance")
@@ -64,7 +65,7 @@ public class Entrance {
         return "Entrance{" +
                 "id=" + id +
                 ", name=" + name +
-                ", stateList=" + stateList +
+                ", stateList=" + Arrays.toString(stateList.toArray()) +
                 '}';
     }
 }

@@ -3,11 +3,9 @@ package si.fri.prpo.s01.api.servlets;
 import com.kumuluz.ee.configuration.utils.ConfigurationUtil;
 import si.fri.prpo.s01.entitete.Entrance;
 import si.fri.prpo.s01.entitete.State;
-import si.fri.prpo.s01.services.beans.EntrancesBean;
-import si.fri.prpo.s01.services.beans.OccupancyRateBean;
-import si.fri.prpo.s01.services.beans.RoomsBean;
-import si.fri.prpo.s01.services.beans.StatesBean;
+import si.fri.prpo.s01.services.beans.*;
 import si.fri.prpo.s01.entitete.Room;
+import si.fri.prpo.s01.services.dtos.AddRoomWithEntrancesDTO;
 import si.fri.prpo.s01.services.dtos.CanMoreEnterDTO;
 import si.fri.prpo.s01.services.dtos.PeopleEnterDTO;
 
@@ -32,51 +30,46 @@ public class JPAServlet extends HttpServlet {
     private StatesBean statesBean;
     @Inject
     private OccupancyRateBean occupancyRateBean;
+    @Inject
+    private RoomManagerBean roomManagerBean;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         final PrintWriter writer = resp.getWriter();
-        ConfigurationUtil.getInstance().get("kumuluzee.name").ifPresent(r -> writer.println("Service name: "+ r));
+        ConfigurationUtil.getInstance().get("kumuluzee.name").ifPresent(r -> writer.println("Service name: " + r));
 
         List<Room> rooms = roomsBean.getRooms();
-        // people enter through enterance 1
-        PeopleEnterDTO peopleEnterDTO = new PeopleEnterDTO();
-        peopleEnterDTO.setEntranceId(1);
 
-        CanMoreEnterDTO canMoreEnterDTO = new CanMoreEnterDTO();
-        canMoreEnterDTO.setRoomId(1);
-
-        if (occupancyRateBean.CanMoreEnter(canMoreEnterDTO)){
-            writer.println("Room is not full, 1 person will enter");
-            peopleEnterDTO.setNumber(1);
-            occupancyRateBean.PeopleEnter(peopleEnterDTO);
-        }else {
-            writer.println("Room is full, 1 person will exit");
-            peopleEnterDTO.setNumber(1);
-            occupancyRateBean.PeopleExit(peopleEnterDTO);
-        }
-
+        writer.println("\n--------------------- ROOMS listing");
 
         // izpis uporabnikov na spletno stran
         writer.println("Rooms:");
-        for (Room r: rooms){
-            writer.println(String.format("- %s", r.getName()));
+        for (Room r : rooms) {
+            writer.println(String.format("- %s", r));
         }
 
         // izpis uporabnikov na spletno stran preko criteriaAPI
         rooms = roomsBean.getRoomsCriteriaAPI();
         writer.println("\nRoomsCriteriaAPI:");
-        for (Room r: rooms){
-            writer.println(String.format("- %s", r.getName()));
+        for (Room r : rooms) {
+            writer.println(String.format("- %s", r));
         }
 
         // izpis vhodov za sobo 1
         List<Entrance> entrances = entrancesBean.getEntrancesForRoom(1);
         writer.println("\nEntrances for room 1:");
-        for (Entrance e: entrances){
+        for (Entrance e : entrances) {
             writer.println(String.format("- %s", e.toString()));
         }
+        List<State> states = statesBean.getStatesForRoom(1);
+        writer.println("\nStates in room 1: " + Arrays.toString(states.toArray()));
 
+        writer.println("\n--------------------- OWNERS");
+
+        List<String> owners = roomsBean.getOwners();
+        writer.write(Arrays.toString(owners.toArray()));
+
+        writer.println("\n--------------------- ROOM CRUD");
 
         // Dodaj sobo
         Room r = new Room();
@@ -103,7 +96,33 @@ public class JPAServlet extends HttpServlet {
         writer.println("\nDeleted room");
         roomsBean.deleteRoom(r.getId());
 
-        List<State> states = statesBean.getStatesForRoom(1);
-        writer.println("\nStates in room 1: " + Arrays.toString(states.toArray()));
+        writer.println("\n--------------------- OCCUPACY RATE BEAN");
+
+        // people enter through enterance 1
+        PeopleEnterDTO peopleEnterDTO = new PeopleEnterDTO();
+        peopleEnterDTO.setEntranceId(1);
+
+        CanMoreEnterDTO canMoreEnterDTO = new CanMoreEnterDTO();
+        canMoreEnterDTO.setRoomId(1);
+
+        if (occupancyRateBean.CanMoreEnter(canMoreEnterDTO)) {
+            writer.println("Room is not full, 1 person will enter");
+            peopleEnterDTO.setNumber(1);
+            occupancyRateBean.PeopleEnter(peopleEnterDTO);
+        } else {
+            writer.println("Room is full, 1 person will exit");
+            peopleEnterDTO.setNumber(1);
+            occupancyRateBean.PeopleExit(peopleEnterDTO);
+        }
+
+        writer.println("\n--------------------- ROOM MANAGER BEAN");
+        AddRoomWithEntrancesDTO sloncki = new AddRoomWithEntrancesDTO("Igralnica sloncki", 4, "Nada");
+        sloncki.addEntrance("Igrisce");
+        sloncki.addEntrance("Hodnik");
+
+        Room slonckiRoom = roomManagerBean.addRoomWithEntrances(sloncki);
+
+        writer.write("new room:");
+        writer.write(slonckiRoom.toString());
     }
 }
