@@ -11,8 +11,8 @@ import java.util.List;
         {
                 @NamedQuery(name = "Room.getAll", query = "SELECT r FROM room r"),
                 @NamedQuery(name = "Room.get", query =  "SELECT r FROM room r WHERE r.id = :id"),
-                @NamedQuery(name = "Room.getOwners", query =  "SELECT DISTINCT r.owner FROM room r")
-                //se dodej neke te queries
+                @NamedQuery(name = "Room.getOwners", query =  "SELECT DISTINCT r.owner FROM room r"),
+                @NamedQuery(name = "Room.getForOwner", query =  "SELECT r FROM room r WHERE r.owner = :owner")
         })
 public class Room {
 

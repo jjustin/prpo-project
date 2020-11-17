@@ -36,8 +36,19 @@ public class RoomsBean {
     }
 
     public List<Room> getRooms() {
-
         List<Room> rooms = em.createNamedQuery("Room.getAll").getResultList();
+
+        return rooms;
+    }
+
+    public List<String> getOwners() {
+        List<String> owners = em.createNamedQuery("Room.getOwners").getResultList();
+
+        return owners;
+    }
+
+    public List<Room> getForOwner(String owner) {
+        List<Room> rooms = em.createNamedQuery("Room.getForOwner").setParameter("owner", owner).getResultList();
 
         return rooms;
     }
