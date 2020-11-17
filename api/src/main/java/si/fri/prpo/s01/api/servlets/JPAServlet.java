@@ -8,6 +8,7 @@ import si.fri.prpo.s01.services.beans.OccupancyRateBean;
 import si.fri.prpo.s01.services.beans.RoomsBean;
 import si.fri.prpo.s01.services.beans.StatesBean;
 import si.fri.prpo.s01.entitete.Room;
+import si.fri.prpo.s01.services.dtos.CanMoreEnterDTO;
 import si.fri.prpo.s01.services.dtos.PeopleEnterDTO;
 
 import javax.inject.Inject;
@@ -41,10 +42,19 @@ public class JPAServlet extends HttpServlet {
         // people enter through enterance 1
         PeopleEnterDTO peopleEnterDTO = new PeopleEnterDTO();
         peopleEnterDTO.setEntranceId(1);
-        peopleEnterDTO.setNumber(3);
-        occupancyRateBean.PeopleEnter(peopleEnterDTO);
-        peopleEnterDTO.setNumber(2);
-        occupancyRateBean.PeopleExit(peopleEnterDTO);
+
+        CanMoreEnterDTO canMoreEnterDTO = new CanMoreEnterDTO();
+        canMoreEnterDTO.setRoomId(1);
+
+        if (occupancyRateBean.CanMoreEnter(canMoreEnterDTO)){
+            writer.println("Room is not full, 1 person will enter");
+            peopleEnterDTO.setNumber(1);
+            occupancyRateBean.PeopleEnter(peopleEnterDTO);
+        }else {
+            writer.println("Room is full, 1 person will exit");
+            peopleEnterDTO.setNumber(1);
+            occupancyRateBean.PeopleExit(peopleEnterDTO);
+        }
 
 
         // izpis uporabnikov na spletno stran

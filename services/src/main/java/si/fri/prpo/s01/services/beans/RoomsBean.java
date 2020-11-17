@@ -1,5 +1,6 @@
 package si.fri.prpo.s01.services.beans;
 
+import si.fri.prpo.s01.entitete.Entrance;
 import si.fri.prpo.s01.entitete.Room;
 
 import javax.annotation.PostConstruct;
@@ -11,7 +12,10 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Logger;
 
 @ApplicationScoped
@@ -28,10 +32,10 @@ public class RoomsBean {
 
     @PreDestroy
     public void remove() {
-        log.info("Destroying bean"+ RoomsBean.class.getSimpleName());
+        log.info("Destroying bean" + RoomsBean.class.getSimpleName());
     }
 
-    public List<Room> getRooms () {
+    public List<Room> getRooms() {
 
         List<Room> rooms = em.createNamedQuery("Room.getAll").getResultList();
 
@@ -39,7 +43,7 @@ public class RoomsBean {
     }
 
 
-    public List<Room> getRoomsCriteriaAPI(){
+    public List<Room> getRoomsCriteriaAPI() {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Room> q = cb.createQuery(Room.class);
         Root<Room> from = q.from(Room.class);
@@ -48,15 +52,16 @@ public class RoomsBean {
         return em.createQuery(q).getResultList();
     }
 
-    public Room getRoom (int id) {
+    @Transactional
+    public Room getRoom(int id) {
         Room room = em.find(Room.class, id);
 
         return room;
     }
 
     @Transactional
-    public Room addRoom(Room room){
-        if (room != null){
+    public Room addRoom(Room room) {
+        if (room != null) {
             em.persist(room);
         }
 
@@ -64,20 +69,31 @@ public class RoomsBean {
     }
 
     @Transactional
-    public Room updateRoom(int id, Room room){
+    public Room updateRoom(int id, Room room) {
         Room oldRoom = em.find(Room.class, id);
 
-        if (room == null){
+        if (room == null) {
             return oldRoom;
         }
 
         room.setId(oldRoom.getId());
-        if (room.getName()==null){room.setName(oldRoom.getName());}
-        if (room.getInRoom()==null){room.setInRoom(oldRoom.getInRoom());}
-        if (room.getSize()==null){room.setSize(oldRoom.getSize());}
-        if (room.getOwner()==null){room.setOwner(oldRoom.getOwner());}
-        // TODO: fix
-//        room.getEntranceList().addAll(room.getEntranceList());
+        if (room.getName() == null) {
+            room.setName(oldRoom.getName());
+        }
+        if (room.getInRoom() == null) {
+            room.setInRoom(oldRoom.getInRoom());
+        }
+        if (room.getSize() == null) {
+            room.setSize(oldRoom.getSize());
+        }
+        if (room.getOwner() == null) {
+            room.setOwner(oldRoom.getOwner());
+        }
+
+        // combine room's entrance list without duplicates
+        Set<Entrance> set = new LinkedHashSet<>(oldRoom.getEntranceList());
+        set.addAll(room.getEntranceList());
+        room.setEntranceList(new ArrayList<>(set));
 
         em.merge(room);
 
@@ -85,7 +101,10 @@ public class RoomsBean {
     }
 
     @Transactional
-    public void deleteRoom(int id){
-        em.remove(em.find(Room.class, id));
+    public void deleteRoom(int id) {
+        Room room = getRoom(id);
+        if (room != null) {
+            em.remove(room);
+        }
     }
 }

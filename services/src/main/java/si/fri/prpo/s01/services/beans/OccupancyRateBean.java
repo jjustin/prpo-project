@@ -3,6 +3,7 @@ package si.fri.prpo.s01.services.beans;
 import si.fri.prpo.s01.entitete.Entrance;
 import si.fri.prpo.s01.entitete.Room;
 import si.fri.prpo.s01.entitete.State;
+import si.fri.prpo.s01.services.dtos.CanMoreEnterDTO;
 import si.fri.prpo.s01.services.dtos.PeopleEnterDTO;
 
 import javax.annotation.PostConstruct;
@@ -50,8 +51,7 @@ public class OccupancyRateBean {
         Integer newInRoom = room.getInRoom() +  pe.getNumber();
         room.setInRoom(newInRoom);
         roomsBean.updateRoom(room.getId(), room);
-
-
+        
         // create new state
         State state = new State();
 
@@ -92,6 +92,9 @@ public class OccupancyRateBean {
         return state;
     }
 
-    // TODO: add another call
+    public Boolean CanMoreEnter(CanMoreEnterDTO in){
+        Room room = roomsBean.getRoom(in.getRoomId());
 
+        return room.getInRoom() < room.getSize();
+    }
 }
