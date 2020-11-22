@@ -8,6 +8,7 @@ import java.util.Set;
 
 @ApplicationPath("v1")
 public class RoomCounterApplication extends javax.ws.rs.core.Application {
+
     @Override
     public Set<Class<?>> getClasses() {
         Set<Class<?>> resources = new

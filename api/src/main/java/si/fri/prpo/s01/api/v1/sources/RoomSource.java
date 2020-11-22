@@ -1,9 +1,11 @@
 package si.fri.prpo.s01.api.v1.sources;
 
 import si.fri.prpo.s01.entitete.Entrance;
+import si.fri.prpo.s01.entitete.State;
 import si.fri.prpo.s01.services.beans.EntrancesBean;
 import si.fri.prpo.s01.services.beans.RoomsBean;
 import si.fri.prpo.s01.entitete.Room;
+import si.fri.prpo.s01.services.beans.StatesBean;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -24,6 +26,8 @@ public class RoomSource {
 
     @Inject
     private EntrancesBean entrancesBean;
+    @Inject
+    private StatesBean statesBean;
 
 //    @Operation(description="Returns list of all rooms", summary="List of rooms")
 //    @APIResponses({
@@ -72,6 +76,17 @@ public class RoomSource {
         return Response.
                 ok(entrances).
                 header("X-Total-Count", entrances.size()).
+                build();
+    }
+
+    @GET
+    @Path("{id}/states")
+    public Response getStatesForRoom(@PathParam("id") Integer roomID){
+        List<State> states = statesBean.getStatesForRoom(roomID);
+
+        return Response.
+                ok(states).
+                header("X-Total-Count", states.size()).
                 build();
     }
 
