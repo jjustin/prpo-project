@@ -1,4 +1,4 @@
-package si.fri.prpo.s01.services.anotations;
+package si.fri.prpo.s01.services.annotations;
 
 import javax.interceptor.InterceptorBinding;
 import java.lang.annotation.ElementType;
