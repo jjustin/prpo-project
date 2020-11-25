@@ -2,6 +2,7 @@ package si.fri.prpo.s01.services.beans;
 
 import si.fri.prpo.s01.entitete.Entrance;
 import si.fri.prpo.s01.entitete.Room;
+import si.fri.prpo.s01.services.annotations.RecordCalls;
 import si.fri.prpo.s01.services.dtos.AddRoomWithEntrancesDTO;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -10,6 +11,7 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
+@RecordCalls
 @ApplicationScoped
 public class RoomManagerBean {
     @Inject

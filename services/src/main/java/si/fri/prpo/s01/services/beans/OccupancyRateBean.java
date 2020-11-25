@@ -3,6 +3,7 @@ package si.fri.prpo.s01.services.beans;
 import si.fri.prpo.s01.entitete.Entrance;
 import si.fri.prpo.s01.entitete.Room;
 import si.fri.prpo.s01.entitete.State;
+import si.fri.prpo.s01.services.annotations.RecordCalls;
 import si.fri.prpo.s01.services.dtos.CanMoreEnterDTO;
 import si.fri.prpo.s01.services.dtos.PeopleEnterDTO;
 
@@ -18,6 +19,7 @@ import java.util.UUID;
 import java.util.logging.Logger;
 import java.time.OffsetDateTime;
 
+@RecordCalls
 @ApplicationScoped
 public class OccupancyRateBean {
     private String uuid = UUID.randomUUID().toString();
