@@ -3,9 +3,11 @@ package si.fri.prpo.s01.api.v1.sources;
 import si.fri.prpo.s01.entitete.Entrance;
 import si.fri.prpo.s01.entitete.State;
 import si.fri.prpo.s01.services.beans.EntrancesBean;
+import si.fri.prpo.s01.services.beans.RoomManagerBean;
 import si.fri.prpo.s01.services.beans.RoomsBean;
 import si.fri.prpo.s01.entitete.Room;
 import si.fri.prpo.s01.services.beans.StatesBean;
+import si.fri.prpo.s01.services.dtos.AddRoomWithEntrancesDTO;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -23,6 +25,9 @@ public class RoomSource {
 
     @Inject
     private RoomsBean roomsBean;
+
+    @Inject
+    private RoomManagerBean roomManagerBean;
 
     @Inject
     private EntrancesBean entrancesBean;
@@ -62,8 +67,8 @@ public class RoomSource {
     }
 
     @POST
-    public Response createRoom(Room room){
-        room = roomsBean.addRoom(room);
+    public Response createRoomWithEntrances(AddRoomWithEntrancesDTO roomWithEntrancesDTO){
+        Room room = roomManagerBean.addRoomWithEntrances(roomWithEntrancesDTO);
         return Response.status(Response.Status.CREATED).entity(room).build();
     }
 

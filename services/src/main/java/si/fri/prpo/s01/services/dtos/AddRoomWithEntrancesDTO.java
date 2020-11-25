@@ -4,31 +4,33 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AddRoomWithEntrancesDTO {
-    String roomName;
-    Integer roomSize;
+    String name;
+    Integer size;
+    Integer inRoom;
     String owner;
     List<String> entrancesNames = new ArrayList<>();
 
-    public AddRoomWithEntrancesDTO(String roomName, Integer roomSize, String owner) {
-        this.roomName = roomName;
-        this.roomSize = roomSize;
+    public AddRoomWithEntrancesDTO(){}
+    public AddRoomWithEntrancesDTO(String name, Integer size, String owner) {
+        this.name = name;
+        this.size = size;
         this.owner = owner;
     }
 
     public String getRoomName() {
-        return roomName;
+        return name;
     }
 
-    public void setRoomName(String roomName) {
-        this.roomName = roomName;
+    public void setRoomName(String name) {
+        this.name = name;
     }
 
     public Integer getRoomSize() {
-        return roomSize;
+        return size;
     }
 
-    public void setRoomSize(Integer roomSize) {
-        this.roomSize = roomSize;
+    public void setRoomSize(Integer size) {
+        this.size = size;
     }
 
     public List<String> getEntrancesNames() {
@@ -49,5 +51,13 @@ public class AddRoomWithEntrancesDTO {
 
     public void setOwner(String owner) {
         this.owner = owner;
+    }
+
+    public Integer getInRoom() {
+        return inRoom;
+    }
+
+    public void setInRoom(Integer inRoom) {
+        this.inRoom = inRoom;
     }
 }

@@ -25,7 +25,7 @@ public class RoomManagerBean {
         Room room = new Room();
         room.setName(in.getRoomName());
         room.setOwner(in.getOwner());
-        room.setInRoom(0);
+        room.setInRoom(in.getInRoom());
         room.setSize(in.getRoomSize());
 
         List<Entrance> entrances = new ArrayList<Entrance>();
@@ -40,6 +40,7 @@ public class RoomManagerBean {
             entrance = entrancesBean.addEntrance(entrance);
             entrances.add(entrance);
         }
+
         return room;
     }
 }

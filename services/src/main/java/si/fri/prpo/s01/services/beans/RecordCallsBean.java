@@ -27,7 +27,7 @@ public class RecordCallsBean {
 
     @PreDestroy
     public void remove(){
-        log.info("Destroying bean" + RecordCallsBean.class.getSimpleName());
+        log.info("Destroying bean " + RecordCallsBean.class.getSimpleName());
     }
 
 
@@ -36,11 +36,11 @@ public class RecordCallsBean {
 
         if(currNo != null){
             numberOfCalls.replace(methodName, currNo + 1);
-            log.info("Number of calls for method "+ methodName + "is"+ (currNo + 1));
+            log.info("Number of calls for method "+ methodName + " is "+ (currNo + 1));
         }
         else{
             numberOfCalls.put(methodName, 1);
-            log.info("Number of calls for method "+ methodName + "is " + 1);
+            log.info("Number of calls for method "+ methodName + " is " + 1);
         }
     }
 }

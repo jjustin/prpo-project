@@ -22,13 +22,6 @@ public class EntranceSource {
     @Inject
     private EntrancesBean entrancesBean;
 
-    @POST
-    public Response AddEntrance(Entrance entrance){
-        // FIXME pagination
-        entrance = entrancesBean.addEntrance(entrance);
-
-        return Response.ok(entrance).build();
-    }
     @GET
     @Path("{id}")
     public Response getEntrance(@PathParam("id") Integer entranceId){
@@ -48,7 +41,4 @@ public class EntranceSource {
         entrance = entrancesBean.addEntrance(entrance);
         return Response.status(Response.Status.CREATED).entity(entrance).build();
     }
-
-
-
 }
