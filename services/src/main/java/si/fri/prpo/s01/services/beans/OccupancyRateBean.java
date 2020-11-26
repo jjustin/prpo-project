@@ -45,7 +45,7 @@ public class OccupancyRateBean {
 
 
     @Transactional
-    public State PeopleEnter(PeopleEnterDTO pe){
+    public State peopleEnter(PeopleEnterDTO pe){
         Entrance entrance = entrancesBean.getEntrance(pe.getEntranceId());
         Room room = entrance.getRoom();
 
@@ -70,7 +70,7 @@ public class OccupancyRateBean {
     }
 
     @Transactional
-    public State PeopleExit(PeopleEnterDTO pe){
+    public State peopleExit(PeopleEnterDTO pe){
         Entrance entrance = entrancesBean.getEntrance(pe.getEntranceId());
         Room room = entrance.getRoom();
 
@@ -94,7 +94,7 @@ public class OccupancyRateBean {
         return state;
     }
 
-    public Boolean CanMoreEnter(CanMoreEnterDTO in){
+    public Boolean canMoreEnter(CanMoreEnterDTO in){
         Room room = roomsBean.getRoom(in.getRoomId());
 
         return room.getInRoom() < room.getSize();

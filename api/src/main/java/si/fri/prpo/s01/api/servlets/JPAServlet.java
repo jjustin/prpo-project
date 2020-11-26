@@ -38,7 +38,7 @@ public class JPAServlet extends HttpServlet {
         final PrintWriter writer = resp.getWriter();
         ConfigurationUtil.getInstance().get("kumuluzee.name").ifPresent(r -> writer.println("Service name: " + r));
 
-        List<Room> rooms = roomsBean.getRooms();
+        List<Room> rooms = roomsBean.getRooms(null);
 
         writer.println("\n--------------------- ROOMS listing");
 
@@ -105,14 +105,14 @@ public class JPAServlet extends HttpServlet {
         CanMoreEnterDTO canMoreEnterDTO = new CanMoreEnterDTO();
         canMoreEnterDTO.setRoomId(1);
 
-        if (occupancyRateBean.CanMoreEnter(canMoreEnterDTO)) {
+        if (occupancyRateBean.canMoreEnter(canMoreEnterDTO)) {
             writer.println("Room is not full, 1 person will enter");
             peopleEnterDTO.setNumber(1);
-            occupancyRateBean.PeopleEnter(peopleEnterDTO);
+            occupancyRateBean.peopleEnter(peopleEnterDTO);
         } else {
             writer.println("Room is full, 1 person will exit");
             peopleEnterDTO.setNumber(1);
-            occupancyRateBean.PeopleExit(peopleEnterDTO);
+            occupancyRateBean.peopleExit(peopleEnterDTO);
         }
 
         writer.println("\n--------------------- ROOM MANAGER BEAN");

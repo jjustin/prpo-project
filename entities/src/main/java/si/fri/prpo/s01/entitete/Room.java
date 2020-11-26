@@ -15,7 +15,6 @@ import java.util.List;
                 @NamedQuery(name = "Room.getForOwner", query =  "SELECT r FROM room r WHERE r.owner = :owner")
         })
 public class Room {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
