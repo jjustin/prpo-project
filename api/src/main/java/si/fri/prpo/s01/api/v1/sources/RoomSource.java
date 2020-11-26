@@ -1,5 +1,11 @@
 package si.fri.prpo.s01.api.v1.sources;
 
+import com.kumuluz.ee.rest.beans.QueryParameters;
+import org.eclipse.microprofile.openapi.annotations.Operation;
+import org.eclipse.microprofile.openapi.annotations.media.Content;
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
+import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
 import si.fri.prpo.s01.entitete.Entrance;
 import si.fri.prpo.s01.entitete.State;
 import si.fri.prpo.s01.services.beans.EntrancesBean;
@@ -34,17 +40,16 @@ public class RoomSource {
     @Inject
     private StatesBean statesBean;
 
-//    @Operation(description="Returns list of all rooms", summary="List of rooms")
-//    @APIResponses({
-//            @APIResponse(ResponseCode = "200",
-//                    description = "List of rooms"
-//                    content = @Content(schema = @Schema(implementation = Room.class, type = SchemaType.ARRAY))
-//            )
-//    })
+    @Operation(summary = "Get list of rooms", description = "Returns list of rooms specified in the filter")
+    @APIResponses({
+            @APIResponse(description = "List of rooms", responseCode = "200",
+                    content = @Content(schema = @Schema(implementation = Room.class)))
+    })
     @GET
     public Response getRooms(){
-        // FIXME pagination
-        List<Room> rooms = roomsBean.getRooms();
+        QueryParameters query = QueryParameters.query(uriInfo.getRequestUri().getQuery()).build();
+
+        List<Room> rooms = roomsBean.getRooms(query);
 
         return Response.
                 ok(rooms).
@@ -52,6 +57,11 @@ public class RoomSource {
                 build();
     }
 
+    @Operation(summary = "Get a signle room", description = "Returns a single room")
+    @APIResponses({
+            @APIResponse(description = "List of rooms", responseCode = "200",
+                    content = @Content(schema = @Schema(implementation = Room.class)))
+    })
     @GET
     @Path("{id}")
     public Response getRoom(@PathParam("id") Integer roomId){

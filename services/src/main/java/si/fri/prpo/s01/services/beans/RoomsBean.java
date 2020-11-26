@@ -1,5 +1,7 @@
 package si.fri.prpo.s01.services.beans;
 
+import com.kumuluz.ee.rest.beans.QueryParameters;
+import com.kumuluz.ee.rest.utils.JPAUtils;
 import si.fri.prpo.s01.entitete.Entrance;
 import si.fri.prpo.s01.entitete.Room;
 
@@ -35,8 +37,8 @@ public class RoomsBean {
         log.info("Destroying bean" + RoomsBean.class.getSimpleName());
     }
 
-    public List<Room> getRooms() {
-        List<Room> rooms = em.createNamedQuery("Room.getAll").getResultList();
+    public List<Room> getRooms(QueryParameters query) {
+        List<Room> rooms = JPAUtils.queryEntities(em, Room.class, query);
 
         return rooms;
     }
@@ -46,13 +48,6 @@ public class RoomsBean {
 
         return owners;
     }
-
-    public List<Room> getForOwner(String owner) {
-        List<Room> rooms = em.createNamedQuery("Room.getForOwner").setParameter("owner", owner).getResultList();
-
-        return rooms;
-    }
-
 
     public List<Room> getRoomsCriteriaAPI() {
         CriteriaBuilder cb = em.getCriteriaBuilder();
