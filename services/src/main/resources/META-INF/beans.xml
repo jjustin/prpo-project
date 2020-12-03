@@ -6,6 +6,4 @@
     <interceptors>
         <class>si.fri.prpo.s01.services.interceptors.RecordCallsInterceptor</class>
     </interceptors>
-
-
 </beans>

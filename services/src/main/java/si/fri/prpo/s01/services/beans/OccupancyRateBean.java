@@ -17,7 +17,6 @@ import java.sql.Time;
 import java.sql.Date;
 import java.util.UUID;
 import java.util.logging.Logger;
-import java.time.OffsetDateTime;
 
 @RecordCalls
 @ApplicationScoped

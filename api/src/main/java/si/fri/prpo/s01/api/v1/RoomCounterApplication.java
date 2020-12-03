@@ -2,6 +2,7 @@ package si.fri.prpo.s01.api.v1;
 
 import si.fri.prpo.s01.api.v1.sources.EntranceSource;
 import si.fri.prpo.s01.api.v1.sources.RoomSource;
+import si.fri.prpo.s01.api.v1.sources.StateSource;
 
 import javax.ws.rs.ApplicationPath;
 import java.util.Set;
@@ -15,6 +16,7 @@ public class RoomCounterApplication extends javax.ws.rs.core.Application {
                 java.util.HashSet<Class<?>>();
         resources.add(RoomSource.class);
         resources.add(EntranceSource.class);
+        resources.add(StateSource.class);
         return resources;
     }
 }

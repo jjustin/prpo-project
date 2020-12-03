@@ -21,13 +21,6 @@ public class StateSource {
     @Inject
     private StatesBean statesBean;
 
-    @POST
-    public Response addState(State state){
-        state = statesBean.addState(state);
-
-        return Response.ok(state).build();
-    }
-
     @GET
     @Path("{id}")
     public Response getState(@PathParam("id") Integer stateId){
