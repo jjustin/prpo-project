@@ -49,7 +49,7 @@ public class RoomSource {
             @APIResponse(description = "List of rooms", responseCode = "200",
                     content = @Content(schema = @Schema(implementation = Room.class)))
     })
-    @RolesAllowed("user")
+    //@RolesAllowed("user")
     @GET
     public Response getRooms(){
         QueryParameters query = QueryParameters.query(uriInfo.getRequestUri().getQuery()).build();
@@ -91,7 +91,7 @@ public class RoomSource {
             @APIResponse(description = "New room created", responseCode = "201",
                     content = @Content(schema = @Schema(implementation = Room.class)))
     })
-    @RolesAllowed("admin")
+   // @RolesAllowed("admin")
     @POST
     public Response createRoomWithEntrances(@RequestBody(
             description = "DTO for adding rooms", required = true,
