@@ -32,6 +32,30 @@ public class EntranceSource {
     @Inject
     private OccupancyRateBean occupancyRateBean;
 
+
+    @Operation(summary = "Get list of entrances", description = "Returns list of entrances specified in the filter")
+    @APIResponses({
+            @APIResponse(description = "List of entraces",
+                    responseCode = "200",
+                    content = @Content(
+                            schema = @Schema(implementation = Entrance.class, type = SchemaType.ARRAY)),
+                    headers = {@Header(name = "X-Total-Count", description = "Number of all enrances")}
+                    )
+    })
+    //@RolesAllowed("user")
+    @GET
+    public Response getEntrances(){
+        QueryParameters query = QueryParameters.query(uriInfo.getRequestUri().getQuery()).build();
+
+        List<Entrance> entrances = entrancesBean.getEntrances(query);
+
+        return Response.
+                ok(entrances).
+                header("X-Total-Count", entrancesBean.countEntrances(query)).
+                build();
+    }
+
+
     @Operation(summary = "Get a signle entrance", description = "Returns a single entrance")
     @APIResponses({
             @APIResponse(description = "List of entrances", responseCode = "200",

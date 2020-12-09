@@ -1,5 +1,8 @@
 package si.fri.prpo.s01.services.beans;
 
+import com.kumuluz.ee.rest.beans.QueryParameters;
+import com.kumuluz.ee.rest.utils.JPAUtils;
+import si.fri.prpo.s01.entitete.Room;
 import si.fri.prpo.s01.entitete.State;
 
 import javax.annotation.PostConstruct;
@@ -29,8 +32,17 @@ public class StatesBean {
         log.info("Destroying bean" + StatesBean.class.getSimpleName());
     }
 
-    public List<State> getStatesForRoom (int roomID) {
+    public List<State> getStates(QueryParameters query) {
+        List<State> states = JPAUtils.queryEntities(em, State.class, query);
+        return states;
+    }
 
+    public long countStates(QueryParameters query) {
+        return JPAUtils.queryEntitiesCount(em, State.class, query);
+    }
+
+
+    public List<State> getStatesForRoom (int roomID) {
         List<State> states = em.createNamedQuery("State.getAllForRoom")
                 .setParameter("roomID", roomID)
                 .getResultList();

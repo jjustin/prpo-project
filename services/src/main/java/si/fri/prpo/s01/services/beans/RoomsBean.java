@@ -39,8 +39,11 @@ public class RoomsBean {
 
     public List<Room> getRooms(QueryParameters query) {
         List<Room> rooms = JPAUtils.queryEntities(em, Room.class, query);
-
         return rooms;
+    }
+
+    public long countRooms(QueryParameters query) {
+        return JPAUtils.queryEntitiesCount(em, Room.class, query);
     }
 
     public List<String> getOwners() {

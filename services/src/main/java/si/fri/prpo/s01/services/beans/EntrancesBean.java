@@ -1,6 +1,9 @@
 package si.fri.prpo.s01.services.beans;
 
+import com.kumuluz.ee.rest.beans.QueryParameters;
+import com.kumuluz.ee.rest.utils.JPAUtils;
 import si.fri.prpo.s01.entitete.Entrance;
+import si.fri.prpo.s01.entitete.Room;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -27,6 +30,16 @@ public class EntrancesBean {
     @PreDestroy
     public void remove(){
         log.info("Destroying bean" + EntrancesBean.class.getSimpleName());
+    }
+
+
+    public List<Entrance> getEntrances(QueryParameters query) {
+        List<Entrance> entrances = JPAUtils.queryEntities(em, Entrance.class, query);
+        return entrances;
+    }
+
+    public long countEntrances(QueryParameters query) {
+        return JPAUtils.queryEntitiesCount(em, Entrance.class, query);
     }
 
     public List<Entrance> getEntrancesForRoom (int roomID) {

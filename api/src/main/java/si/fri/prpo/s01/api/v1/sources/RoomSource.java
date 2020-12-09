@@ -40,8 +40,6 @@ public class RoomSource {
     private RoomManagerBean roomManagerBean;
 
     @Inject
-    private EntrancesBean entrancesBean;
-    @Inject
     private StatesBean statesBean;
 
     @Operation(summary = "Get list of rooms", description = "Returns list of rooms specified in the filter")
@@ -58,7 +56,7 @@ public class RoomSource {
 
         return Response.
                 ok(rooms).
-                header("X-Total-Count", rooms.size()).
+                header("X-Total-Count", roomsBean.countRooms(query)).
                 build();
     }
 
@@ -101,38 +99,4 @@ public class RoomSource {
         Room room = roomManagerBean.addRoomWithEntrances(roomWithEntrancesDTO);
         return Response.status(Response.Status.CREATED).entity(room).build();
     }
-
-    @Operation(summary = "Get entrance for room", description = "Returns an entrance for a room")
-    @APIResponses({
-            @APIResponse(description = "New entrance", responseCode = "200",
-                    content = @Content(schema = @Schema(implementation = Room.class))) //a kle mogoce Entrance.class
-    })
-    @GET
-    @Path("{id}/entrances")
-    public Response getEntrancesForRoom(@PathParam("id") Integer roomId){
-        // FIXME pagination
-        List<Entrance> entrances = entrancesBean.getEntrancesForRoom(roomId);
-
-        return Response.
-                ok(entrances).
-                header("X-Total-Count", entrances.size()).
-                build();
-    }
-
-    @Operation(summary = "Get state for room", description = "Returns a state for a room")
-    @APIResponses({
-            @APIResponse(description = "New state", responseCode = "200",
-                    content = @Content(schema = @Schema(implementation = Room.class))) //a kle mogoce State.class
-    })
-    @GET
-    @Path("{id}/states")
-    public Response getStatesForRoom(@PathParam("id") Integer roomID){
-        List<State> states = statesBean.getStatesForRoom(roomID);
-
-        return Response.
-                ok(states).
-                header("X-Total-Count", states.size()).
-                build();
-    }
-
 }

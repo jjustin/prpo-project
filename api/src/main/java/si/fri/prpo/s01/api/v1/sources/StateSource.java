@@ -1,6 +1,7 @@
 package si.fri.prpo.s01.api.v1.sources;
 
 
+import com.kumuluz.ee.rest.beans.QueryParameters;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.media.Content;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
@@ -15,16 +16,41 @@ import si.fri.prpo.s01.services.dtos.StateDTO;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
+import java.util.List;
 
 @ApplicationScoped
 @Path("states")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class StateSource {
+    @Context
+    protected UriInfo uriInfo;
+
     @Inject
     private StatesBean statesBean;
+
+    @Operation(summary = "Get list of states", description = "Returns list of states specified in the filter")
+    @APIResponses({
+            @APIResponse(description = "List of states", responseCode = "200",
+                    content = @Content(schema = @Schema(implementation = State.class)))
+    })
+    //@RolesAllowed("user")
+    @GET
+    public Response getStates(){
+        QueryParameters query = QueryParameters.query(uriInfo.getRequestUri().getQuery()).build();
+
+        List<State> states = statesBean.getStates(query);
+
+        return Response.
+                ok(states).
+                header("X-Total-Count", statesBean.countStates(query)).
+                build();
+    }
+
 
     @Operation(summary = "Get a state", description = "Returns a state")
     @APIResponses({
@@ -62,7 +88,4 @@ public class StateSource {
         state = statesBean.addState(state);
         return Response.status(Response.Status.CREATED).entity(state).build();
     }
-
-
-
 }
