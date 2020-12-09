@@ -6,7 +6,7 @@ import si.fri.prpo.s01.entitete.State;
 import si.fri.prpo.s01.services.beans.*;
 import si.fri.prpo.s01.entitete.Room;
 import si.fri.prpo.s01.services.dtos.AddRoomWithEntrancesDTO;
-import si.fri.prpo.s01.services.dtos.CanMoreEnterDTO;
+import si.fri.prpo.s01.services.dtos.ChangeCheckDTO;
 import si.fri.prpo.s01.services.dtos.PeopleEnterDTO;
 
 import javax.inject.Inject;
@@ -98,22 +98,22 @@ public class JPAServlet extends HttpServlet {
 
         writer.println("\n--------------------- OCCUPACY RATE BEAN");
 
-        // people enter through enterance 1
-        PeopleEnterDTO peopleEnterDTO = new PeopleEnterDTO();
-        peopleEnterDTO.setEntranceId(1);
-
-        CanMoreEnterDTO canMoreEnterDTO = new CanMoreEnterDTO();
-        canMoreEnterDTO.setRoomId(1);
-
-        if (occupancyRateBean.canMoreEnter(canMoreEnterDTO)) {
-            writer.println("Room is not full, 1 person will enter");
-            peopleEnterDTO.setNumber(1);
-            occupancyRateBean.peopleEnter(peopleEnterDTO);
-        } else {
-            writer.println("Room is full, 1 person will exit");
-            peopleEnterDTO.setNumber(1);
-            occupancyRateBean.peopleExit(peopleEnterDTO);
-        }
+//        // people enter through enterance 1
+//        PeopleEnterDTO peopleEnterDTO = new PeopleEnterDTO();
+//        peopleEnterDTO.setEntranceId(1);
+//
+//        ChangeCheckDTO canMoreEnterDTO = new ChangeCheckDTO();
+//        canMoreEnterDTO.setRoomId(1);
+//
+//        if (occupancyRateBean.canMoreEnter(canMoreEnterDTO)) {
+//            writer.println("Room is not full, 1 person will enter");
+//            peopleEnterDTO.setNumber(1);
+//            occupancyRateBean.peopleEnter(peopleEnterDTO);
+//        } else {
+//            writer.println("Room is full, 1 person will exit");
+//            peopleEnterDTO.setNumber(1);
+//            occupancyRateBean.peopleExit(peopleEnterDTO);
+//        }
 
         writer.println("\n--------------------- ROOM MANAGER BEAN");
         AddRoomWithEntrancesDTO sloncki = new AddRoomWithEntrancesDTO("Igralnica sloncki", 4, "Nada");

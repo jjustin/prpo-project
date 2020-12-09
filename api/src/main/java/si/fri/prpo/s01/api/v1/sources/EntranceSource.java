@@ -1,8 +1,12 @@
 package si.fri.prpo.s01.api.v1.sources;
 
+import com.kumuluz.ee.rest.beans.QueryParameters;
 import org.eclipse.microprofile.openapi.annotations.Operation;
+import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
+import org.eclipse.microprofile.openapi.annotations.headers.Header;
 import org.eclipse.microprofile.openapi.annotations.media.Content;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
+import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
 import si.fri.prpo.s01.entitete.Entrance;
@@ -12,11 +16,13 @@ import si.fri.prpo.s01.services.beans.OccupancyRateBean;
 import si.fri.prpo.s01.entitete.Room;
 import si.fri.prpo.s01.services.dtos.AddRoomWithEntrancesDTO;
 import si.fri.prpo.s01.services.dtos.PeopleEnterDTO;
+import si.fri.prpo.s01.services.exceptions.InvalidNumberOfPeopleException;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
+import java.util.List;
 
 @ApplicationScoped
 @Path("entrances")
@@ -56,7 +62,7 @@ public class EntranceSource {
     }
 
 
-    @Operation(summary = "Get a signle entrance", description = "Returns a single entrance")
+    @Operation(summary = "Get a single entrance", description = "Returns a single entrance")
     @APIResponses({
             @APIResponse(description = "List of entrances", responseCode = "200",
                     content = @Content(schema = @Schema(implementation = Entrance.class)))
@@ -86,7 +92,13 @@ public class EntranceSource {
                     content = @Content(schema = @Schema(implementation = Entrance.class)))
     })
     @POST
-    public Response createEntrance(Entrance entrance){
+    public Response createEntrance(@RequestBody(
+            description =  "Info of entrance to add",
+            required = true,
+            content = @Content(
+                schema = @Schema(implementation = Entrance.class, type = SchemaType.OBJECT)
+            )) Entrance entrance){
+
         entrance = entrancesBean.addEntrance(entrance);
         return Response.status(Response.Status.CREATED).entity(entrance).build();
     }
@@ -98,10 +110,16 @@ public class EntranceSource {
     })
     @POST
     @Path("{id}/enter")
-    public Response peopleEnter(@PathParam("id") Integer entranceID, PeopleEnterDTO peopleEnterDTO){
+    public Response peopleEnter(@PathParam("id") Integer entranceID,
+                                @RequestBody(
+                                        description =  "Info of entrance to add",
+                                        required = true,
+                                        content = @Content(
+                                                schema = @Schema(implementation = PeopleEnterDTO.class)
+                                        ))PeopleEnterDTO peopleEnterDTO) {
         peopleEnterDTO.setEntranceId(entranceID);
         State state = occupancyRateBean.peopleEnter(peopleEnterDTO);
-        return Response.status(Response.Status.CREATED).entity(state).build();
+        return Response.status(Response.Status.CREATED).entity(state.getEntrance()).build();
     }
 
     @Operation(summary = "Number of people leave", description = "Counts people that left")
@@ -111,11 +129,10 @@ public class EntranceSource {
     })
     @POST
     @Path("{id}/exit")
-    public Response peopleExit(@PathParam("id") Integer entranceID, PeopleEnterDTO peopleEnterDTO){
+    public Response peopleExit(@PathParam("id") Integer entranceID, PeopleEnterDTO peopleEnterDTO) throws Exception{
         peopleEnterDTO.setEntranceId(entranceID);
         State state = occupancyRateBean.peopleEnter(peopleEnterDTO);
-        return Response.status(Response.Status.CREATED).entity(state).build();
+        return Response.status(Response.Status.CREATED).entity(state.getEntrance()).build();
     }
-
 
 }

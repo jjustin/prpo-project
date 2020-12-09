@@ -32,4 +32,11 @@ public class RoomCounterApplication extends javax.ws.rs.core.Application {
         resources.add(StateSource.class);
         return resources;
     }
+
+    @Override
+    public Set<Object> getSingletons() {
+        Set<Object> set = new HashSet<>();
+        set.add(new InvalidNumberOfPeopleExceptionMapper());
+        return set;
+    }
 }

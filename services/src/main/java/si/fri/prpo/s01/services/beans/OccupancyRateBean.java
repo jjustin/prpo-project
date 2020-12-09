@@ -4,13 +4,13 @@ import si.fri.prpo.s01.entitete.Entrance;
 import si.fri.prpo.s01.entitete.Room;
 import si.fri.prpo.s01.entitete.State;
 import si.fri.prpo.s01.services.annotations.RecordCalls;
-import si.fri.prpo.s01.services.dtos.CanMoreEnterDTO;
+import si.fri.prpo.s01.services.dtos.ChangeCheckDTO;
 import si.fri.prpo.s01.services.dtos.PeopleEnterDTO;
+import si.fri.prpo.s01.services.exceptions.InvalidNumberOfPeopleException;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import java.sql.Time;
@@ -48,6 +48,12 @@ public class OccupancyRateBean {
         Entrance entrance = entrancesBean.getEntrance(pe.getEntranceId());
         Room room = entrance.getRoom();
 
+        ChangeCheckDTO cc =new ChangeCheckDTO();
+        cc.setRoomId(room.getId());cc.setNumberOfPpl(pe.getNumber());
+        if (!canMoreEnter(cc)){
+            throw new InvalidNumberOfPeopleException("Too many people would enter");
+        }
+
         // update room
         Integer newInRoom = room.getInRoom() +  pe.getNumber();
         room.setInRoom(newInRoom);
@@ -69,9 +75,15 @@ public class OccupancyRateBean {
     }
 
     @Transactional
-    public State peopleExit(PeopleEnterDTO pe){
+    public State peopleExit(PeopleEnterDTO pe) throws InvalidNumberOfPeopleException {
         Entrance entrance = entrancesBean.getEntrance(pe.getEntranceId());
         Room room = entrance.getRoom();
+
+        ChangeCheckDTO cc =new ChangeCheckDTO();
+        cc.setRoomId(room.getId());cc.setNumberOfPpl(pe.getNumber());
+        if (!canExit(cc)){
+            throw new InvalidNumberOfPeopleException("Too many people would exit");
+        }
 
         // update room
         Integer newInRoom = room.getInRoom() - pe.getNumber();
@@ -93,9 +105,17 @@ public class OccupancyRateBean {
         return state;
     }
 
-    public Boolean canMoreEnter(CanMoreEnterDTO in){
-        Room room = roomsBean.getRoom(in.getRoomId());
+    public Boolean canMoreEnter(ChangeCheckDTO cc){
+        Room room = roomsBean.getRoom(cc.getRoomId());
 
-        return room.getInRoom() < room.getSize();
+        return room.getInRoom() + cc.getNumberOfPpl() <= room.getSize();
     }
+
+    public Boolean canExit(ChangeCheckDTO cc) {
+        Room room = roomsBean.getRoom(cc.getRoomId());
+
+        return room.getInRoom()  >= cc.getNumberOfPpl();
+    }
+
+
 }
