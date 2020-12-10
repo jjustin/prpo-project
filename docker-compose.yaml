@@ -7,4 +7,13 @@ services:
       # - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     ports:
-      - 5433:5432
+      - 5432:5432
+  api:
+    #image: janezju/prpo-room-counter
+    build: .
+    ports:
+      - 8080:8080
+#  history:
+#    image: janezju/prpo-room-history
+#    ports:
+#      - 8081:8080

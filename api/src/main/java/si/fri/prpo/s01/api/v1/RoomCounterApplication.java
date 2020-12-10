@@ -22,21 +22,4 @@ import java.util.Set;
             servers = @Server(url = "http://localhost:8080"))
 @ApplicationPath("v1")
 public class RoomCounterApplication extends javax.ws.rs.core.Application {
-
-    @Override
-    public Set<Class<?>> getClasses() {
-        Set<Class<?>> resources = new
-                java.util.HashSet<Class<?>>();
-        resources.add(RoomSource.class);
-        resources.add(EntranceSource.class);
-        resources.add(StateSource.class);
-        return resources;
-    }
-
-    @Override
-    public Set<Object> getSingletons() {
-        Set<Object> set = new HashSet<>();
-        set.add(new InvalidNumberOfPeopleExceptionMapper());
-        return set;
-    }
 }
