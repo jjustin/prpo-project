@@ -20,6 +20,6 @@ kumuluzee:
       mapping: /openapi
     ui:
       mapping: /openapi/ui
-intergations:
+integrations:
   history-system:
-    base-url: http://localhost:8081/v1
+    base-url: http://history:8080/v1

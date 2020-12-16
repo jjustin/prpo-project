@@ -10,13 +10,9 @@ import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
 import si.fri.prpo.s01.entitete.Entrance;
-import si.fri.prpo.s01.entitete.State;
 import si.fri.prpo.s01.services.beans.EntrancesBean;
 import si.fri.prpo.s01.services.beans.OccupancyRateBean;
-import si.fri.prpo.s01.entitete.Room;
-import si.fri.prpo.s01.services.dtos.AddRoomWithEntrancesDTO;
-import si.fri.prpo.s01.services.dtos.PeopleEnterDTO;
-import si.fri.prpo.s01.services.exceptions.InvalidNumberOfPeopleException;
+import si.fri.prpo.s01.services.dtos.PeopleChangeDTO;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -109,30 +105,16 @@ public class EntranceSource {
                     content = @Content(schema = @Schema(implementation = Entrance.class)))
     })
     @POST
-    @Path("{id}/enter")
-    public Response peopleEnter(@PathParam("id") Integer entranceID,
+    @Path("{id}/change")
+    public Response peopleChange(@PathParam("id") Integer entranceID,
                                 @RequestBody(
                                         description =  "Info of entrance to add",
                                         required = true,
                                         content = @Content(
-                                                schema = @Schema(implementation = PeopleEnterDTO.class)
-                                        ))PeopleEnterDTO peopleEnterDTO) {
+                                                schema = @Schema(implementation = PeopleChangeDTO.class)
+                                        )) PeopleChangeDTO peopleEnterDTO) {
         peopleEnterDTO.setEntranceId(entranceID);
-        State state = occupancyRateBean.peopleEnter(peopleEnterDTO);
-        return Response.status(Response.Status.CREATED).entity(state.getEntrance()).build();
+        Entrance entrance = occupancyRateBean.peopleChange(peopleEnterDTO);
+        return Response.status(Response.Status.CREATED).entity(entrance).build();
     }
-
-    @Operation(summary = "Number of people leave", description = "Counts people that left")
-    @APIResponses({
-            @APIResponse(description = "new number of people that left", responseCode = "200",
-                    content = @Content(schema = @Schema(implementation = Entrance.class)))
-    })
-    @POST
-    @Path("{id}/exit")
-    public Response peopleExit(@PathParam("id") Integer entranceID, PeopleEnterDTO peopleEnterDTO) throws Exception{
-        peopleEnterDTO.setEntranceId(entranceID);
-        State state = occupancyRateBean.peopleEnter(peopleEnterDTO);
-        return Response.status(Response.Status.CREATED).entity(state.getEntrance()).build();
-    }
-
 }

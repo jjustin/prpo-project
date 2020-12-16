@@ -1,6 +1,6 @@
 package si.fri.prpo.s01.services.dtos;
 
-public class PeopleEnterDTO {
+public class PeopleChangeDTO {
     private Integer entranceId;
     private Integer number; // number of people entering/exiting
 
