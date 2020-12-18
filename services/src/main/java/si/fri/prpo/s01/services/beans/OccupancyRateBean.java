@@ -1,8 +1,8 @@
 package si.fri.prpo.s01.services.beans;
 
 import com.kumuluz.ee.configuration.utils.ConfigurationUtil;
-import si.fri.prpo.s01.entitete.Entrance;
-import si.fri.prpo.s01.entitete.Room;
+import si.fri.prpo.s01.entities.Entrance;
+import si.fri.prpo.s01.entities.Room;
 import si.fri.prpo.s01.services.annotations.RecordCalls;
 import si.fri.prpo.s01.services.dtos.ChangeCheckDTO;
 import si.fri.prpo.s01.services.dtos.PeopleChangeDTO;

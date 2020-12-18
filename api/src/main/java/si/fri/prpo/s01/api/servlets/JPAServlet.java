@@ -1,10 +1,10 @@
 package si.fri.prpo.s01.api.servlets;
 
 import com.kumuluz.ee.configuration.utils.ConfigurationUtil;
-import si.fri.prpo.s01.entitete.Entrance;
-import si.fri.prpo.s01.entitete.State;
+import si.fri.prpo.s01.entities.Entrance;
+import si.fri.prpo.s01.entities.State;
 import si.fri.prpo.s01.services.beans.*;
-import si.fri.prpo.s01.entitete.Room;
+import si.fri.prpo.s01.entities.Room;
 import si.fri.prpo.s01.services.dtos.AddRoomWithEntrancesDTO;
 
 import javax.inject.Inject;

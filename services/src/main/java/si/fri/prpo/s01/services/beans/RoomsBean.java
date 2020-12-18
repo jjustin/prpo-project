@@ -2,8 +2,8 @@ package si.fri.prpo.s01.services.beans;
 
 import com.kumuluz.ee.rest.beans.QueryParameters;
 import com.kumuluz.ee.rest.utils.JPAUtils;
-import si.fri.prpo.s01.entitete.Entrance;
-import si.fri.prpo.s01.entitete.Room;
+import si.fri.prpo.s01.entities.Entrance;
+import si.fri.prpo.s01.entities.Room;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;

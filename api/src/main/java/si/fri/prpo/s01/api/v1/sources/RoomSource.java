@@ -2,23 +2,17 @@ package si.fri.prpo.s01.api.v1.sources;
 
 import com.kumuluz.ee.rest.beans.QueryParameters;
 import org.eclipse.microprofile.openapi.annotations.Operation;
-import org.eclipse.microprofile.openapi.annotations.info.Contact;
 import org.eclipse.microprofile.openapi.annotations.media.Content;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
-import org.eclipse.microprofile.openapi.annotations.parameters.Parameter;
 import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
-import si.fri.prpo.s01.entitete.Entrance;
-import si.fri.prpo.s01.entitete.State;
-import si.fri.prpo.s01.services.beans.EntrancesBean;
 import si.fri.prpo.s01.services.beans.RoomManagerBean;
 import si.fri.prpo.s01.services.beans.RoomsBean;
-import si.fri.prpo.s01.entitete.Room;
+import si.fri.prpo.s01.entities.Room;
 import si.fri.prpo.s01.services.beans.StatesBean;
 import si.fri.prpo.s01.services.dtos.AddRoomWithEntrancesDTO;
 
-import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -60,7 +54,7 @@ public class RoomSource {
                 build();
     }
 
-    @Operation(summary = "Get a signle room", description = "Returns a single room")
+    @Operation(summary = "Get a single room", description = "Returns a single room")
     @APIResponses({
             @APIResponse(description = "List of rooms", responseCode = "200",
                     content = @Content(schema = @Schema(implementation = Room.class)))
@@ -84,7 +78,7 @@ public class RoomSource {
         return Response.noContent().build();
     }
 
-    @Operation(summary = "Create room", description = "Creates room with an entrance")
+    @Operation(summary = "Create room with entrances", description = "Create room with entrances")
     @APIResponses({
             @APIResponse(description = "New room created", responseCode = "201",
                     content = @Content(schema = @Schema(implementation = Room.class)))
@@ -93,7 +87,7 @@ public class RoomSource {
     @POST
     public Response createRoomWithEntrances(@RequestBody(
             description = "DTO for adding rooms", required = true,
-            content = @Content(schema = @Schema(implementation = Room.class)))
+            content = @Content(schema = @Schema(implementation = AddRoomWithEntrancesDTO.class)))
                                     AddRoomWithEntrancesDTO roomWithEntrancesDTO){
 
         Room room = roomManagerBean.addRoomWithEntrances(roomWithEntrancesDTO);

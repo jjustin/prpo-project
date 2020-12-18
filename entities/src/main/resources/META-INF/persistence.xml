@@ -3,9 +3,9 @@
     <persistence-unit name="room-counter-jpa" transaction-type="JTA">
         <jta-data-source>jdbc/roomCounterDS</jta-data-source>
 
-        <class>si.fri.prpo.s01.entitete.Entrance</class>
-        <class>si.fri.prpo.s01.entitete.Room</class>
-        <class>si.fri.prpo.s01.entitete.State</class>
+        <class>si.fri.prpo.s01.entities.Entrance</class>
+        <class>si.fri.prpo.s01.entities.Room</class>
+        <class>si.fri.prpo.s01.entities.State</class>
 
         <properties>
             <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>

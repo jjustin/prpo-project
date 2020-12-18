@@ -5,9 +5,9 @@ import java.util.List;
 
 public class AddRoomWithEntrancesDTO {
     String name;
+    String owner;
     Integer size;
     Integer inRoom;
-    String owner;
     List<String> entrancesNames = new ArrayList<>();
 
     public AddRoomWithEntrancesDTO(){}
@@ -17,19 +17,19 @@ public class AddRoomWithEntrancesDTO {
         this.owner = owner;
     }
 
-    public String getRoomName() {
+    public String getName() {
         return name;
     }
 
-    public void setRoomName(String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
-    public Integer getRoomSize() {
+    public Integer getSize() {
         return size;
     }
 
-    public void setRoomSize(Integer size) {
+    public void setSize(Integer size) {
         this.size = size;
     }
 

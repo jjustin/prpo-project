@@ -7,11 +7,8 @@ import org.eclipse.microprofile.openapi.annotations.media.Content;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
-import si.fri.prpo.s01.entitete.Room;
-import si.fri.prpo.s01.entitete.State;
-import si.fri.prpo.s01.services.beans.EntrancesBean;
+import si.fri.prpo.s01.entities.State;
 import si.fri.prpo.s01.services.beans.StatesBean;
-import si.fri.prpo.s01.services.dtos.StateDTO;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;

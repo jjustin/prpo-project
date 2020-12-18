@@ -20,6 +20,10 @@ kumuluzee:
       mapping: /openapi
     ui:
       mapping: /openapi/ui
+  dev:
+    scan-libraries:
+      - entities
+      - services
 integrations:
   history-system:
     base-url: http://history:8080/v1
