@@ -13,6 +13,7 @@ import si.fri.prpo.s01.entities.Entrance;
 import si.fri.prpo.s01.services.beans.EntrancesBean;
 import si.fri.prpo.s01.services.beans.OccupancyRateBean;
 import si.fri.prpo.s01.services.dtos.PeopleChangeDTO;
+import si.fri.prpo.s01.services.dtos.PeopleChangeFromImageDTO;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -108,13 +109,27 @@ public class EntranceSource {
     @Path("{id}/change")
     public Response peopleChange(@PathParam("id") Integer entranceID,
                                 @RequestBody(
-                                        description =  "Info of entrance to add",
+                                        description =  "Info of people entering",
                                         required = true,
                                         content = @Content(
                                                 schema = @Schema(implementation = PeopleChangeDTO.class)
                                         )) PeopleChangeDTO peopleEnterDTO) {
         peopleEnterDTO.setEntranceId(entranceID);
         Entrance entrance = occupancyRateBean.peopleChange(peopleEnterDTO);
+        return Response.status(Response.Status.CREATED).entity(entrance).build();
+    }
+
+    @POST
+    @Path("{id}/changeFromImage")
+    public Response peopleChangeFromImage(@PathParam("id") Integer entranceID,
+                                 @RequestBody(
+                                         description =  "Info of people entering",
+                                         required = true,
+                                         content = @Content(
+                                                 schema = @Schema(implementation = PeopleChangeFromImageDTO.class)
+                                         )) PeopleChangeFromImageDTO peopleEnterDTO) {
+        peopleEnterDTO.setEntranceId(entranceID);
+        Entrance entrance = occupancyRateBean.peopleChangeFromImageUrl(peopleEnterDTO);
         return Response.status(Response.Status.CREATED).entity(entrance).build();
     }
 }

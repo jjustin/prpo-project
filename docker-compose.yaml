@@ -11,8 +11,12 @@ services:
   api:
     #image: janezju/prpo-room-counter
     build: .
+    environment:
+      - RAPID_API_HOST
+      - RAPID_API_KEY
     ports:
       - 8080:8080
+
   history:
     image: janezju/prpo-room-history
     ports:

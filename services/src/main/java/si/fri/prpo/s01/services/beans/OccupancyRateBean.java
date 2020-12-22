@@ -4,6 +4,7 @@ import com.kumuluz.ee.configuration.utils.ConfigurationUtil;
 import si.fri.prpo.s01.entities.Entrance;
 import si.fri.prpo.s01.entities.Room;
 import si.fri.prpo.s01.services.annotations.RecordCalls;
+import si.fri.prpo.s01.services.dtos.PeopleChangeFromImageDTO;
 import si.fri.prpo.s01.services.dtos.ChangeCheckDTO;
 import si.fri.prpo.s01.services.dtos.PeopleChangeDTO;
 import si.fri.prpo.s01.services.exceptions.InvalidNumberOfPeopleException;
@@ -38,6 +39,9 @@ public class OccupancyRateBean {
     @Inject
     private StatesBean statesBean;
 
+    @Inject
+    private FaceCounterBean faceCounterBean;
+
     private Client httpClient;
     private String baseUrl;
 
@@ -54,8 +58,20 @@ public class OccupancyRateBean {
         log.info("Destroying bean " + OccupancyRateBean.class.getSimpleName()+ " with id: " + uuid);
     }
 
+    public Entrance peopleChangeFromImageUrl(PeopleChangeFromImageDTO apfi){
+        int n = faceCounterBean.countFromPicture(apfi.getUrl());
+        PeopleChangeDTO pc = new PeopleChangeDTO();
+        pc.setEntranceId(apfi.getEntranceId());
+        pc.setNumber(apfi.isPeopleEnter()? n : -n);
+
+        return peopleChange(pc);
+    }
+
     @Transactional
     public Entrance peopleChange(PeopleChangeDTO pe) {
+        if (pe.getNumber() == 0){
+            throw new InvalidNumberOfPeopleException("No change in number of people");
+        }
         Entrance entrance = entrancesBean.getEntrance(pe.getEntranceId());
         Room room = entrance.getRoom();
 
@@ -110,6 +126,4 @@ public class OccupancyRateBean {
             throw new InternalServerErrorException(e);
         }
     }
-
-
 }
