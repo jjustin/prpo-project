@@ -28,6 +28,7 @@
         <kumuluzee-openapi-mp.version>1.4.0</kumuluzee-openapi-mp.version>
         <kumuluzee-config-mp.version>1.4.0</kumuluzee-config-mp.version>
         <kumuluzee-health.version>2.4.0</kumuluzee-health.version>
+        <kumuluzee-cors.version>1.0.6</kumuluzee-cors.version>
         <postgresql.version>42.2.18</postgresql.version>
     </properties>
 
