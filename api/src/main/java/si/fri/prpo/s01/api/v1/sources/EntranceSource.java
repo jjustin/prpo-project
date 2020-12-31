@@ -1,5 +1,6 @@
 package si.fri.prpo.s01.api.v1.sources;
 
+import com.kumuluz.ee.cors.annotations.CrossOrigin;
 import com.kumuluz.ee.rest.beans.QueryParameters;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
@@ -73,14 +74,14 @@ public class EntranceSource {
 
     @Operation(summary = "Delete an entrance", description = "Deletes an entrance")
     @APIResponses({
-            @APIResponse(description = "Entrance deleted", responseCode = "204",
-                    content = @Content(schema = @Schema(implementation = Entrance.class)))
+            @APIResponse(description = "Removed entrance's ID", responseCode = "200",
+                    content = @Content(schema = @Schema(implementation = Integer.class)))
     })
     @DELETE
     @Path("{id}")
     public Response deleteEntrance(@PathParam("id") Integer entranceID){
         entrancesBean.deleteEntrance(entranceID);
-        return Response.noContent().build();
+        return Response.ok(entranceID).build();
     }
 
     @Operation(summary = "Create an entrance", description = "Creates a new entrance")

@@ -1,12 +1,16 @@
 package si.fri.prpo.s01.api.v1.sources;
 
+import com.kumuluz.ee.cors.annotations.CrossOrigin;
 import com.kumuluz.ee.rest.beans.QueryParameters;
 import org.eclipse.microprofile.openapi.annotations.Operation;
+import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
+import org.eclipse.microprofile.openapi.annotations.headers.Header;
 import org.eclipse.microprofile.openapi.annotations.media.Content;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
+import si.fri.prpo.s01.entities.Entrance;
 import si.fri.prpo.s01.services.beans.RoomManagerBean;
 import si.fri.prpo.s01.services.beans.RoomsBean;
 import si.fri.prpo.s01.entities.Room;
@@ -38,8 +42,12 @@ public class RoomSource {
 
     @Operation(summary = "Get list of rooms", description = "Returns list of rooms specified in the filter")
     @APIResponses({
-            @APIResponse(description = "List of rooms", responseCode = "200",
-                    content = @Content(schema = @Schema(implementation = Room.class)))
+            @APIResponse(description = "List of rooms",
+                    responseCode = "200",
+                    content = @Content(
+                            schema = @Schema(implementation = Room.class, type = SchemaType.ARRAY)),
+                    headers = {@Header(name = "X-Total-Count", description = "Number of all enrances")}
+            )
     })
     //@RolesAllowed("user")
     @GET
@@ -54,9 +62,27 @@ public class RoomSource {
                 build();
     }
 
+    @Operation(summary = "Get list of owners", description = "Returns list of all room owners")
+    @APIResponses({
+            @APIResponse(description = "List of owners", responseCode = "200",
+                    content = @Content(schema = @Schema(implementation = String.class, type = SchemaType.ARRAY))
+            )
+    })
+    //@RolesAllowed("user")
+    @GET
+    @Path("owners")
+    public Response getOwners(){
+        List<String> rooms = roomsBean.getOwners();
+
+        return Response.
+                ok(rooms).
+                build();
+    }
+
+
     @Operation(summary = "Get a single room", description = "Returns a single room")
     @APIResponses({
-            @APIResponse(description = "List of rooms", responseCode = "200",
+            @APIResponse(description = "Room", responseCode = "200",
                     content = @Content(schema = @Schema(implementation = Room.class)))
     })
     @GET
@@ -68,14 +94,14 @@ public class RoomSource {
 
     @Operation(summary = "Delete a room", description = "Deletes a room")
     @APIResponses({
-            @APIResponse(description = "Room deleted", responseCode = "204",
-                    content = @Content(schema = @Schema(implementation = Room.class)))
+            @APIResponse(description = "Removed room's ID", responseCode = "200",
+                    content = @Content(schema = @Schema(implementation = Integer.class)))
     })
     @DELETE
     @Path("{id}")
     public Response deleteRoom(@PathParam("id") Integer roomID){
         roomsBean.deleteRoom(roomID);
-        return Response.noContent().build();
+        return Response.ok(roomID).build();
     }
 
     @Operation(summary = "Create room with entrances", description = "Create room with entrances")
