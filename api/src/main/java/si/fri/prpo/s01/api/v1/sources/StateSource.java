@@ -2,6 +2,7 @@ package si.fri.prpo.s01.api.v1.sources;
 
 
 import com.kumuluz.ee.rest.beans.QueryParameters;
+import com.kumuluz.ee.security.annotations.Secure;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.media.Content;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
@@ -10,6 +11,8 @@ import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
 import si.fri.prpo.s01.entities.State;
 import si.fri.prpo.s01.services.beans.StatesBean;
 
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -23,6 +26,7 @@ import java.util.List;
 @Path("states")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
+@Secure
 public class StateSource {
     @Context
     protected UriInfo uriInfo;
@@ -35,8 +39,9 @@ public class StateSource {
             @APIResponse(description = "List of states", responseCode = "200",
                     content = @Content(schema = @Schema(implementation = State.class)))
     })
-    //@RolesAllowed("user")
+
     @GET
+    @PermitAll
     public Response getStates(){
         QueryParameters query = QueryParameters.query(uriInfo.getRequestUri().getQuery()).build();
 
@@ -56,6 +61,7 @@ public class StateSource {
     })
     @GET
     @Path("{id}")
+    @RolesAllowed({"user"})
     public Response getState(@PathParam("id") Integer stateId){
 
         State state = statesBean.getState(stateId);
@@ -69,6 +75,7 @@ public class StateSource {
     })
     @DELETE
     @Path("{id}")
+    @RolesAllowed("admin")
     public Response deleteState(@PathParam("id") Integer stateId){
 
         statesBean.deleteState(stateId);
@@ -81,6 +88,7 @@ public class StateSource {
                     content = @Content(schema = @Schema(implementation = State.class)))
     })
     @POST
+    @RolesAllowed("admin")
     public Response createState(State state){
         state = statesBean.addState(state);
         return Response.status(Response.Status.CREATED).entity(state).build();

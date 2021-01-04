@@ -49,7 +49,6 @@ public class RoomSource {
                     headers = {@Header(name = "X-Total-Count", description = "Number of all enrances")}
             )
     })
-    //@RolesAllowed("user")
     @GET
     public Response getRooms(){
         QueryParameters query = QueryParameters.query(uriInfo.getRequestUri().getQuery()).build();
@@ -68,7 +67,6 @@ public class RoomSource {
                     content = @Content(schema = @Schema(implementation = String.class, type = SchemaType.ARRAY))
             )
     })
-    //@RolesAllowed("user")
     @GET
     @Path("owners")
     public Response getOwners(){
@@ -109,7 +107,6 @@ public class RoomSource {
             @APIResponse(description = "New room created", responseCode = "201",
                     content = @Content(schema = @Schema(implementation = Room.class)))
     })
-   // @RolesAllowed("admin")
     @POST
     public Response createRoomWithEntrances(@RequestBody(
             description = "DTO for adding rooms", required = true,

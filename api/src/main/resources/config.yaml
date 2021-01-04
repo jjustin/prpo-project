@@ -26,6 +26,21 @@ kumuluzee:
     scan-libraries:
       - entities
       - services
-integrations:
-  history-system:
-    base-url: http://history:8080/v1
+  integrations:
+    history-system:
+      base-url: http://history:8080/v1
+  security:
+    keycloak:
+      json: '{
+               "realm": "counter-realm",
+               "bearer-only": true,
+               "auth-server-url": "http://localhost:8082/auth/",
+               "ssl-required": "external",
+               "resource": "counter-api",
+               "confidential-port": 0
+             }'
+  kumuluzee:
+    cors-filter:
+      servlet:
+        allow-generic-http-requests: false
+        allow-origin: "*"
