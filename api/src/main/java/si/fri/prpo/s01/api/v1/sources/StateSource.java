@@ -61,7 +61,7 @@ public class StateSource {
     })
     @GET
     @Path("{id}")
-    @RolesAllowed({"user"})
+    @RolesAllowed("user")
     public Response getState(@PathParam("id") Integer stateId){
 
         State state = statesBean.getState(stateId);

@@ -3,8 +3,10 @@
 ## Build and run
 ```
 mvn clean package
+docker-compose up -d keycloak
+# wait for keycloak to start
 docker-compose up -d
-docker-compose up -d --build api
+java -jar api/target/api-1.0.0-SNAPSHOT.jar
 ```
 
 ## ENV

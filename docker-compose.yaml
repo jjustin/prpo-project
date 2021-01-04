@@ -1,5 +1,13 @@
 version: "3.8"
 services:
+  keycloak:
+    image: jboss/keycloak
+    environment:
+      - KEYCLOAK_USER=admin
+      - KEYCLOAK_PASSWORD=admin
+    ports:
+      - 8082:8080
+
   postgres:
     image: postgres:13
     environment:
@@ -8,14 +16,15 @@ services:
       - POSTGRES_PASSWORD=postgres
     ports:
       - 5432:5432
-  api:
-    #image: janezju/prpo-room-counter
-    build: .
-    environment:
-      - RAPID_API_HOST
-      - RAPID_API_KEY
-    ports:
-      - 8080:8080
+
+#  api:
+#    #image: janezju/prpo-room-counter
+#    build: .
+#    environment:
+#      - RAPID_API_HOST
+#      - RAPID_API_KEY
+#    ports:
+#      - 8080:8080
 
   history:
     image: janezju/prpo-room-history
