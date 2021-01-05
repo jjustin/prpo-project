@@ -59,7 +59,7 @@ public class StateSource {
                     content = @Content(schema = @Schema(implementation = State.class)))
     })
     @Path("{id}")
-    @RolesAllowed({"user"})
+    @RolesAllowed("user")
     public Response getState(@PathParam("id") Integer stateId){
 
         State state = statesBean.getState(stateId);

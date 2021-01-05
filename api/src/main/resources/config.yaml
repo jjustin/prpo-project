@@ -5,7 +5,7 @@ kumuluzee:
     name: dev
   datasources:
     - jndi-name: jdbc/roomCounterDS
-      connection-url: jdbc:postgresql://postgres:5432/roomCounter
+      connection-url: jdbc:postgresql://localhost:5432/roomCounter
       username: postgres
       password: postgres
       max-pool-size: 20
@@ -28,13 +28,13 @@ kumuluzee:
       - services
   integrations:
     history-system:
-      base-url: http://history:8080/v1
+      base-url: http://localhost:8081/v1
   security:
     keycloak:
       json: '{
                "realm": "counter-realm",
                "bearer-only": true,
-               "auth-server-url": "http://localhost:8082/auth/",
+               "auth-server-url": "http://localhost:8082/auth",
                "ssl-required": "external",
                "resource": "counter-api",
                "confidential-port": 0
