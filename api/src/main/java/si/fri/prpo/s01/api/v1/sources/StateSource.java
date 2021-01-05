@@ -34,13 +34,12 @@ public class StateSource {
     @Inject
     private StatesBean statesBean;
 
+    @GET
     @Operation(summary = "Get list of states", description = "Returns list of states specified in the filter")
     @APIResponses({
             @APIResponse(description = "List of states", responseCode = "200",
                     content = @Content(schema = @Schema(implementation = State.class)))
     })
-
-    @GET
     @PermitAll
     public Response getStates(){
         QueryParameters query = QueryParameters.query(uriInfo.getRequestUri().getQuery()).build();
@@ -53,13 +52,12 @@ public class StateSource {
                 build();
     }
 
-
+    @GET
     @Operation(summary = "Get a state", description = "Returns a state")
     @APIResponses({
             @APIResponse(description = "List of states", responseCode = "200",
                     content = @Content(schema = @Schema(implementation = State.class)))
     })
-    @GET
     @Path("{id}")
     @RolesAllowed({"user"})
     public Response getState(@PathParam("id") Integer stateId){
@@ -68,12 +66,12 @@ public class StateSource {
         return Response.ok(state).build();
     }
 
+    @DELETE
     @Operation(summary = "Delete a state", description = "Deletes a state")
     @APIResponses({
             @APIResponse(description = "State deleted", responseCode = "204",
                     content = @Content(schema = @Schema(implementation = State.class)))
     })
-    @DELETE
     @Path("{id}")
     @RolesAllowed("admin")
     public Response deleteState(@PathParam("id") Integer stateId){
@@ -82,12 +80,12 @@ public class StateSource {
         return Response.noContent().build();
     }
 
+    @POST
     @Operation(summary = "Create a new state", description = "Creates a state")
     @APIResponses({
             @APIResponse(description = "New state created", responseCode = "201",
                     content = @Content(schema = @Schema(implementation = State.class)))
     })
-    @POST
     @RolesAllowed("admin")
     public Response createState(State state){
         state = statesBean.addState(state);

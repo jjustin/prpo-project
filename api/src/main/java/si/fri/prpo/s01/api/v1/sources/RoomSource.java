@@ -40,6 +40,7 @@ public class RoomSource {
     @Inject
     private StatesBean statesBean;
 
+    @GET
     @Operation(summary = "Get list of rooms", description = "Returns list of rooms specified in the filter")
     @APIResponses({
             @APIResponse(description = "List of rooms",
@@ -49,7 +50,6 @@ public class RoomSource {
                     headers = {@Header(name = "X-Total-Count", description = "Number of all enrances")}
             )
     })
-    @GET
     public Response getRooms(){
         QueryParameters query = QueryParameters.query(uriInfo.getRequestUri().getQuery()).build();
 
@@ -61,13 +61,13 @@ public class RoomSource {
                 build();
     }
 
+    @GET
     @Operation(summary = "Get list of owners", description = "Returns list of all room owners")
     @APIResponses({
             @APIResponse(description = "List of owners", responseCode = "200",
                     content = @Content(schema = @Schema(implementation = String.class, type = SchemaType.ARRAY))
             )
     })
-    @GET
     @Path("owners")
     public Response getOwners(){
         List<String> rooms = roomsBean.getOwners();
@@ -77,37 +77,36 @@ public class RoomSource {
                 build();
     }
 
-
+    @GET
     @Operation(summary = "Get a single room", description = "Returns a single room")
     @APIResponses({
             @APIResponse(description = "Room", responseCode = "200",
                     content = @Content(schema = @Schema(implementation = Room.class)))
     })
-    @GET
     @Path("{id}")
     public Response getRoom(@PathParam("id") Integer roomId){
         Room room = roomsBean.getRoom(roomId);
         return Response.ok(room).build();
     }
 
+    @DELETE
     @Operation(summary = "Delete a room", description = "Deletes a room")
     @APIResponses({
             @APIResponse(description = "Removed room's ID", responseCode = "200",
                     content = @Content(schema = @Schema(implementation = Integer.class)))
     })
-    @DELETE
     @Path("{id}")
     public Response deleteRoom(@PathParam("id") Integer roomID){
         roomsBean.deleteRoom(roomID);
         return Response.ok(roomID).build();
     }
 
+    @POST
     @Operation(summary = "Create room with entrances", description = "Create room with entrances")
     @APIResponses({
             @APIResponse(description = "New room created", responseCode = "201",
                     content = @Content(schema = @Schema(implementation = Room.class)))
     })
-    @POST
     public Response createRoomWithEntrances(@RequestBody(
             description = "DTO for adding rooms", required = true,
             content = @Content(schema = @Schema(implementation = AddRoomWithEntrancesDTO.class)))

@@ -36,7 +36,7 @@ public class EntranceSource {
     @Inject
     private OccupancyRateBean occupancyRateBean;
 
-
+    @GET
     @Operation(summary = "Get list of entrances", description = "Returns list of entrances specified in the filter")
     @APIResponses({
             @APIResponse(description = "List of entraces",
@@ -46,8 +46,6 @@ public class EntranceSource {
                     headers = {@Header(name = "X-Total-Count", description = "Number of all enrances")}
                     )
     })
-    //@RolesAllowed("user")
-    @GET
     public Response getEntrances(){
         QueryParameters query = QueryParameters.query(uriInfo.getRequestUri().getQuery()).build();
 
@@ -59,37 +57,36 @@ public class EntranceSource {
                 build();
     }
 
-
+    @GET
     @Operation(summary = "Get a single entrance", description = "Returns a single entrance")
     @APIResponses({
             @APIResponse(description = "List of entrances", responseCode = "200",
                     content = @Content(schema = @Schema(implementation = Entrance.class)))
     })
-    @GET
     @Path("{id}")
     public Response getEntrance(@PathParam("id") Integer entranceId){
         Entrance entrance = entrancesBean.getEntrance(entranceId);
         return Response.ok(entrance).build();
     }
 
+    @DELETE
     @Operation(summary = "Delete an entrance", description = "Deletes an entrance")
     @APIResponses({
             @APIResponse(description = "Removed entrance's ID", responseCode = "200",
                     content = @Content(schema = @Schema(implementation = Integer.class)))
     })
-    @DELETE
     @Path("{id}")
     public Response deleteEntrance(@PathParam("id") Integer entranceID){
         entrancesBean.deleteEntrance(entranceID);
         return Response.ok(entranceID).build();
     }
 
+    @POST
     @Operation(summary = "Create an entrance", description = "Creates a new entrance")
     @APIResponses({
             @APIResponse(description = "New entrance created", responseCode = "201",
                     content = @Content(schema = @Schema(implementation = Entrance.class)))
     })
-    @POST
     public Response createEntrance(@RequestBody(
             description =  "Info of entrance to add",
             required = true,
@@ -101,12 +98,12 @@ public class EntranceSource {
         return Response.status(Response.Status.CREATED).entity(entrance).build();
     }
 
+    @POST
     @Operation(summary = "Number of people entered", description = "Counts people that entered")
     @APIResponses({
             @APIResponse(description = "new number of people in the room", responseCode = "200",
                     content = @Content(schema = @Schema(implementation = Entrance.class)))
     })
-    @POST
     @Path("{id}/change")
     public Response peopleChange(@PathParam("id") Integer entranceID,
                                 @RequestBody(
